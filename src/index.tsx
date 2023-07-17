@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
+// import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -14,7 +14,7 @@ import { sha256, toByteString } from 'scrypt-ts';
 
 // var artifact = require('./artifact/src/contracts/helloworld.json');
 
-var artifact1 = require('./artifact/src/contracts/identity.json');
+var artifact1 = require('./artifacts/identity.json');
 
 // HelloWorld.loadArtifact(artifact);
 
@@ -26,9 +26,9 @@ const root = ReactDOM.createRoot(
 );
 root.render(
 
-<BrowserRouter basename="/admin">
-<App />
-</BrowserRouter>,
+/* <BrowserRouter basename="/admin"> */
+<App />,
+// </BrowserRouter>,
 
 );
 

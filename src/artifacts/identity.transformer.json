@@ -1,0 +1,11 @@
+{
+  "success": true,
+  "errors": [],
+  "scryptfile": "identity.scrypt",
+  "sourceMapFile": "identity.scrypt.map",
+  "ctxMethods": [
+    "transfer2",
+    "transfer1",
+    "recall"
+  ]
+}

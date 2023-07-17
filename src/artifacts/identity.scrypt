@@ -1,0 +1,57 @@
+
+contract Identity {
+  bytes m;
+  const PubKey issuerPubKey;
+  @state PubKey userPubKey;
+  constructor(PubKey issuer, bytes message) {
+    this.issuerPubKey = issuer;
+    this.userPubKey = issuer;
+    this.m = message;
+  }
+  public function transfer2(Sig userSig, PubKey receiverPubKey, int satoshisSent, SigHashPreimage __scrypt_ts_txPreimage) {
+    require(Tx.checkPreimageSigHashType(__scrypt_ts_txPreimage, SigHashType(b'c3')));
+    int satoshisTotal = SigHash.value(__scrypt_ts_txPreimage);
+    require(satoshisSent > 0 && satoshisSent <= satoshisTotal);
+    require(checkSig(userSig, this.userPubKey));
+    require(this.userPubKey == receiverPubKey || this.userPubKey == this.issuerPubKey);
+    PubKey previousUserPubKey = this.userPubKey;
+    this.userPubKey = receiverPubKey;
+    require(1 == 1);
+  }
+  public function transfer1(Sig userSig, PubKey receiverPubKey, int satoshisSent, SigHashPreimage __scrypt_ts_txPreimage, int __scrypt_ts_changeAmount, Ripemd160 __scrypt_ts_changeAddress) {
+    require(Tx.checkPreimageSigHashType(__scrypt_ts_txPreimage, SigHashType(b'41')));
+    int satoshisTotal = SigHash.value(__scrypt_ts_txPreimage);
+    require(satoshisSent > 0 && satoshisSent <= satoshisTotal);
+    require(checkSig(userSig, this.userPubKey));
+    PubKey previousUserPubKey = this.userPubKey;
+    this.userPubKey = receiverPubKey;
+    bytes outputs = this.buildStateOutput(satoshisSent);
+    int satoshisLeft = satoshisTotal - satoshisSent;
+    if(satoshisLeft > 0) {
+        this.userPubKey = previousUserPubKey;
+        outputs += this.buildStateOutput(satoshisLeft);
+      }
+    if(__scrypt_ts_changeAmount > 0) {
+        outputs += (__scrypt_ts_changeAmount > 0 ? Utils.buildOutput(Utils.buildPublicKeyHashScript(__scrypt_ts_changeAddress), __scrypt_ts_changeAmount) : b'');
+      }
+    require(hash256(outputs) == SigHash.hashOutputs(__scrypt_ts_txPreimage));
+  }
+  public function unlock(Sig sig, PubKey pubkey) {
+    require(checkSig(sig, pubkey));
+  }
+  public function recall(Sig issuerSig, SigHashPreimage __scrypt_ts_txPreimage, int __scrypt_ts_changeAmount, Ripemd160 __scrypt_ts_changeAddress) {
+    require(Tx.checkPreimageSigHashType(__scrypt_ts_txPreimage, SigHashType(b'41')));
+    require(checkSig(issuerSig, this.issuerPubKey));
+    this.userPubKey = this.issuerPubKey;
+    bytes outputs = this.buildStateOutput(SigHash.value(__scrypt_ts_txPreimage));
+    if(__scrypt_ts_changeAmount > 0) {
+        outputs += (__scrypt_ts_changeAmount > 0 ? Utils.buildOutput(Utils.buildPublicKeyHashScript(__scrypt_ts_changeAddress), __scrypt_ts_changeAmount) : b'');
+      }
+    
+    require(hash256(outputs) == SigHash.hashOutputs(__scrypt_ts_txPreimage));
+  }
+    function buildStateOutput(int amount): bytes {
+      bytes script = this.getStateScript();
+      return Utils.buildOutput(script, amount);
+    }
+}

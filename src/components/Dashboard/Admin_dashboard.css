@@ -1,0 +1,34 @@
+.admin-Container{
+    display: flex;
+}
+.profile{
+    font-size: 130%;
+    width: 100%;
+    margin : 8%;
+    color: black;
+}
+
+.profile > div{
+    margin : 2%;
+    padding : 1%;
+    display: flex;
+}
+
+.profile > div * {
+    width : 50%;
+}
+
+.profile > p{
+    background-color: aliceblue;
+    border-radius: 5px;
+    padding-left: 3%;
+}
+
+.neucron > button{
+    border: 0.5px solid black;
+    border-radius: 5px;
+    background-color: rgb(20, 0, 38);
+    color: aliceblue;
+    width : 20%;
+
+}

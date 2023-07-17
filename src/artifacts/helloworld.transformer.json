@@ -1,0 +1,9 @@
+{
+  "success": true,
+  "errors": [],
+  "scryptfile": "helloworld.scrypt",
+  "sourceMapFile": "helloworld.scrypt.map",
+  "ctxMethods": [
+    "increment"
+  ]
+}

@@ -1,25 +1,23 @@
 import { useState } from "react";
 
 const Navbar = () => {
-    const [isOpen, setisOpen] = useState(false);
-    const [multi, setmulti] = useState(false);
-    function toggleOpen() {
-      setisOpen(!isOpen);
-      if(multi)setmulti(!isOpen);
-      
-    }
+  const [isOpen, setIsOpen] = useState(false);
+  const [multi, setMulti] = useState(false);
 
-    function multilevel(){
-      setmulti(!multi);
-      setmulti(!multi);
-    }
+  function toggleOpen() {
+    setIsOpen(!isOpen);
+    if (multi) setMulti(isOpen);
+  }
+
+  function multilevel() {
+    setMulti(!multi);
+    if(isOpen)setIsOpen(!isOpen);
+  }
 
   return (
     <div className="flex max-w-[fit-content] z">
       <div
-        className="{isOpen
-          ? 'w-40'
-          : 'w-80'} flex flex-col h-screen p-3 duration-300 bg-gray-800 shadow"
+        className={isOpen ? 'w-40 flex flex-col h-screen p-3 duration-300 bg-gray-800 shadow' : 'w-80 flex flex-col h-screen p-3 duration-300 bg-gray-800 shadow'}
       >
         <div className="space-y-3">
           <div className="flex items-center justify-between">
@@ -70,7 +68,7 @@ const Navbar = () => {
           <div className="flex-1">
             <ul className="pt-2 pb-4 space-y-1 text-sm">
               <li className="rounded-sm">
-                <a href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                <a href="/" className="flex items-center p-2 space-x-3 rounded-md">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
