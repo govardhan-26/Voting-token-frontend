@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import Create_election from "./Create_Election/Create_election";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -68,7 +70,7 @@ const Navbar = () => {
           <div className="flex-1">
             <ul className="pt-2 pb-4 space-y-1 text-sm">
               <li className="rounded-sm">
-                <a href="/" className="flex items-center p-2 space-x-3 rounded-md">
+                <Link to="/" className="flex items-center p-2 space-x-3 rounded-md">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -85,10 +87,10 @@ const Navbar = () => {
                   </svg>
                   
                   <span className="text-gray-100">Home</span>
-                </a>
+                </Link>
               </li>
               <li className="rounded-sm">
-                <a href='/Create_election' className="flex items-center p-2 space-x-3 rounded-md">
+                <Link to="/Create_election" className="flex items-center p-2 space-x-3 rounded-md">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -106,11 +108,11 @@ const Navbar = () => {
   
                   <span className="text-gray-100">Create Elections</span>
                   
-                </a>
+                </Link>
               </li>
               <li className="rounded-sm border-white">
                 <div className="flex-row" >
-                <a href='#' className="flex items-center p-2 space-x-3 rounded-md">
+                <Link to='#' className="flex items-center p-2 space-x-3 rounded-md">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -127,13 +129,13 @@ const Navbar = () => {
                   </svg>
   
                   <span className="text-gray-100" role="button" onClick={multilevel}  tabIndex={0}> Elections </span>
-                </a>
+                </Link>
               </div>
               {multi ? (
                 <div className="ml-20">
                   <ul className="pt-2 pb-4 space-y-3 text-sm text-white">
                     <li>
-                      <a href='/election_list' className="flex items-center p-2 space-x-3 rounded-md">
+                      <Link to='/election_list' className="flex items-center p-2 space-x-3 rounded-md">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           fill="none"
@@ -151,10 +153,10 @@ const Navbar = () => {
         
                         <span className="text-gray-100">Election List</span>
                         
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a href='/voter_list' className="flex items-center p-2 space-x-3 rounded-md">
+                      <Link to='/voter_list' className="flex items-center p-2 space-x-3 rounded-md">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           fill="none"
@@ -172,10 +174,10 @@ const Navbar = () => {
         
                         <span className="text-gray-100">Voter List</span>
                         
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a href='/candidate_list' className="flex items-center p-2 space-x-3 rounded-md">
+                      <Link to='/candidate_list' className="flex items-center p-2 space-x-3 rounded-md">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           fill="none"
@@ -191,7 +193,7 @@ const Navbar = () => {
                           />
                         </svg>
                         <span className="text-gray-100">Candidate List</span>
-                      </a>
+                      </Link>
                     </li>
                   </ul>
                 </div>
@@ -201,7 +203,7 @@ const Navbar = () => {
                  
               </li>
               <li className="rounded-sm">
-                <a href='#' className="flex items-center p-2 space-x-3 rounded-md">
+                <Link to='#' className="flex items-center p-2 space-x-3 rounded-md">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -223,10 +225,10 @@ const Navbar = () => {
                   </svg>
   
                   <span className="text-gray-100"> Settings </span>
-                </a>
+                </Link>
               </li>
               <li className="rounded-sm">
-                <a href='#' className="flex items-center p-2 space-x-3 rounded-md">
+                <Link to='#' className="flex items-center p-2 space-x-3 rounded-md">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -243,7 +245,7 @@ const Navbar = () => {
                   </svg>
   
                   <span className="text-gray-100"> Logout </span>
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

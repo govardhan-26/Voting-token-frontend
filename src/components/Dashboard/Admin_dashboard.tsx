@@ -1,12 +1,21 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Navbar from '../Navbar'
 import './Admin_dashboard.css'
+import { DefaultProvider, SensiletSigner, toHex } from 'scrypt-ts';
+import { Helloworld } from '../../contracts/helloworld';
+import { useElectioncreation } from '../Context'; 
 
 const Admin_dashboard = () => {
-  const Name = "Govardhan";
-  const Email = "gova@gmail.com";
-  const NID = "1234 2013 2548 2312";
-  const Username = "govarhdan2136";
+
+  const { sensiletLogin, isConnected} = useElectioncreation(); 
+  const [Name, setName] = useState("Shubham Goutham");
+  const [Email, setEmail] = useState("shubh@gmail.com");
+  const [NID, setNID] = useState("1234 2013 2548 2312");
+  const [Username, setUsername] = useState("Shubh");
+
+    useEffect(() => {
+        console.log(isConnected);
+    }, )
 
   return (
     <div className="admin-Container">
@@ -30,7 +39,7 @@ const Admin_dashboard = () => {
           </div>            
           <div className="neucron">
               <b>Connect to Wallet</b> 
-              <button>Connect</button>
+              <button onClick={sensiletLogin}> Connect</button>
           </div>   
         </div>
     </div>
