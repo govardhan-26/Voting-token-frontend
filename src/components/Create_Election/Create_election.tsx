@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import Navbar from '../Navbar'
 import './Create_election.css'
 import { PubKey, SensiletSigner, bsv, toByteString, toHex } from 'scrypt-ts';
-import { Identity } from '../../contracts/identity';
 import { useElectioncreation } from '../Context';
 
 const Create_election = () => {

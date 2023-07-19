@@ -23,6 +23,7 @@ contract Identity {
     int satoshisTotal = SigHash.value(__scrypt_ts_txPreimage);
     require(satoshisSent > 0 && satoshisSent <= satoshisTotal);
     require(checkSig(userSig, this.userPubKey));
+    require(this.userPubKey == receiverPubKey || this.userPubKey == this.issuerPubKey);
     PubKey previousUserPubKey = this.userPubKey;
     this.userPubKey = receiverPubKey;
     bytes outputs = this.buildStateOutput(satoshisSent);
@@ -32,7 +33,7 @@ contract Identity {
         outputs += this.buildStateOutput(satoshisLeft);
       }
     if(__scrypt_ts_changeAmount > 0) {
-        outputs += (__scrypt_ts_changeAmount > 0 ? Utils.buildOutput(Utils.buildPublicKeyHashScript(__scrypt_ts_changeAddress), __scrypt_ts_changeAmount) : b'');
+        outputs += Utils.buildOutput(Utils.buildPublicKeyHashScript(__scrypt_ts_changeAddress), __scrypt_ts_changeAmount);
       }
     require(hash256(outputs) == SigHash.hashOutputs(__scrypt_ts_txPreimage));
   }
@@ -45,7 +46,7 @@ contract Identity {
     this.userPubKey = this.issuerPubKey;
     bytes outputs = this.buildStateOutput(SigHash.value(__scrypt_ts_txPreimage));
     if(__scrypt_ts_changeAmount > 0) {
-        outputs += (__scrypt_ts_changeAmount > 0 ? Utils.buildOutput(Utils.buildPublicKeyHashScript(__scrypt_ts_changeAddress), __scrypt_ts_changeAmount) : b'');
+        outputs += Utils.buildOutput(Utils.buildPublicKeyHashScript(__scrypt_ts_changeAddress), __scrypt_ts_changeAmount);
       }
     
     require(hash256(outputs) == SigHash.hashOutputs(__scrypt_ts_txPreimage));

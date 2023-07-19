@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react'
 import Navbar from '../Navbar'
 import './Admin_dashboard.css'
 import { DefaultProvider, SensiletSigner, toHex } from 'scrypt-ts';
-import { Helloworld } from '../../contracts/helloworld';
 import { useElectioncreation } from '../Context'; 
 
 const Admin_dashboard = () => {

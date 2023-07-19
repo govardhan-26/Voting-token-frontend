@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { createContext } from "react";
 import { useState, useRef } from "react";
 import { DefaultProvider, SensiletSigner, PubKey, toHex, sha256, toByteString, bsv, MethodCallOptions, findSig, SignatureResponse } from "scrypt-ts";
-import { Helloworld } from "../contracts/helloworld";
+import { HelloWorld } from "../contracts/helloworld";
 import { Identity } from "../contracts/identity";
 
 const LocalStateContext = createContext<any>(null);
@@ -17,7 +17,7 @@ function ElectionStateProvider({ children }) {
     
       const signerRef = useRef<SensiletSigner>();
     
-      const [contract, setContract] = useState<Helloworld | undefined>(undefined)
+      const [contract, setContract] = useState<HelloWorld | undefined>(undefined)
     
       const [deployedTxId, setDeployedTxId] = useState<string>("")
     
@@ -53,22 +53,23 @@ function ElectionStateProvider({ children }) {
           }
     
           const signer = signerRef.current as SensiletSigner;
-
+          
         } catch (e) {
           console.error('deploy Kyc failed', e);
           alert('deploy kyc failed');
         }
       };
-    
-    
-      const handleSubmit = async () => {
+      
+      
+const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
         try {
           if (!isConnected || !myPubkey) {
             setConnected(false);
             alert("Please connect wallet first.");
             return;
           }
-    
+          
           let vote_deployTx: bsv.Transaction
           // last contract calling transaction
     
@@ -97,11 +98,13 @@ function ElectionStateProvider({ children }) {
           // I am the issuer, and the first user as well
     
           const initialInstance = new Identity(PubKey(toHex(myPubkey)), toByteString(Data_On_chain, true))
-    
-       
+          
+          console.log(initialInstance);
+          
           // there is one key in the signer, that is `myPrivateKey` (added by default)
           const signer = signerRef.current as SensiletSigner;
-          await initialInstance.connect(signer)
+          console.log(signer);
+          await initialInstance.connect(signer);
 
           // I issue 10 re-callable satoshis
           vote_deployTx = await initialInstance.deploy(vote_satoshisIssued)
@@ -109,11 +112,10 @@ function ElectionStateProvider({ children }) {
           const idx = vote_deployTx.id;
           console.log("Deployed");
 
-    
+          
           setDeployedTxId(idx)
     
         } catch (e) {
-    
           console.error('deploy Kyc failed', e);
           alert('deploy kyc failed');
         }
@@ -281,7 +283,7 @@ function ElectionStateProvider({ children }) {
       };
 
   return (
-    <LocalStateProvider value={{isConnected, myPubkey, myAddress, handlReTransfer, handleSubmit, handlTransfer, sensiletLogin, ElectionName, setElectionName, HeadName, setHeadName, totalSupply, setTotalSupply, CanParticipate, setCanParticipate, CanVote, setCanVote}}>
+    <LocalStateProvider value={{isConnected, myPubkey, myAddress,  handleSubmit,  sensiletLogin, ElectionName, setElectionName, HeadName, setHeadName, totalSupply, setTotalSupply, CanParticipate, setCanParticipate, CanVote, setCanVote}}>
       {children}
     </LocalStateProvider>
   );

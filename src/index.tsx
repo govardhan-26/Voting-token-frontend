@@ -8,13 +8,13 @@ import reportWebVitals from './reportWebVitals';
 
 
 
-import { Helloworld } from './contracts/helloworld';
+import { HelloWorld } from './contracts/helloworld';
 import { Identity } from './contracts/identity';
 import { sha256, toByteString } from 'scrypt-ts';
 
 // var artifact = require('./artifact/src/contracts/helloworld.json');
 
-var artifact1 = require('./artifacts/identity.json');
+var artifact1 = require('./artifact/src/contracts/identity.json');
 
 // HelloWorld.loadArtifact(artifact);
 

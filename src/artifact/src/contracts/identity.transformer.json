@@ -1,8 +1,8 @@
 {
   "success": true,
   "errors": [],
-  "scryptfile": "identity.scrypt",
-  "sourceMapFile": "identity.scrypt.map",
+  "scryptfile": "src/contracts/identity.scrypt",
+  "sourceMapFile": "src/contracts/identity.scrypt.map",
   "ctxMethods": [
     "transfer2",
     "transfer1",
