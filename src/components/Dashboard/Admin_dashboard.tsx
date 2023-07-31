@@ -37,7 +37,7 @@ const Admin_dashboard = () => {
               <label><b>Username</b></label>
               <p className='mx-auto pl-[10rem]'>{Username}</p>
           </div>            
-          <div className="neucron flex p-[1%] m-[2%] w-[50%] mx-auto justify-between">
+          <div className="flex p-[1%] m-[2%] w-[50%] mx-auto justify-between">
               <b>Connect to Wallet</b> 
               <button className='border-[0.5px] border-black rounded-[5px] bg-[#140026] mr-[2rem] text-[#E8E8E8] pt-[3px] pb-[3px] pl-[2px] pr-[2px] w-[20%]' onClick={sensiletLogin}> Connect</button>
           </div>

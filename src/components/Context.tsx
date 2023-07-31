@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { createContext } from "react";
 import { useState, useRef } from "react";
-import { DefaultProvider, SensiletSigner, PubKey, toHex, sha256, toByteString, bsv, MethodCallOptions, findSig, SignatureResponse } from "scrypt-ts";
+import { DefaultProvider, DefaultProviderOption, SensiletSigner, PubKey, toHex, sha256, toByteString, bsv, MethodCallOptions, findSig, SignatureResponse } from "scrypt-ts";
 import { HelloWorld } from "../contracts/helloworld";
 import { Identity } from "../contracts/identity";
 
@@ -74,15 +74,6 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
           // last contract calling transaction
     
           // contract output index
-
-          // console.log(formData);
-          // // const name = formData.tokenName;
-          // const Token_Name = formData.ElectionName
-          // const Protocol_Name = formData.HeadName
-    
-          // // const Token_Symbol = formData.symbol
-    
-          // const Token_supply = formData.totalSupply
     
           setMintedvote_tokens(totalSupply)
           setvote_tokens(totalSupply)
@@ -122,13 +113,13 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       };
     
     
-      const handlTransfer = async (formData: any) => {
+      const handleTransfer = async (e :React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
         const bsvNetwork = 'testnet'
         const vote_satoshisIssued:any= vote_tokens
         let lastCallTx: bsv.Transaction
         let vote_LastCall: bsv.Transaction
         // contract output index
-    
     
         let vote_deployTx: bsv.Transaction
         // last contract calling transaction
@@ -140,7 +131,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     
      
         // Convert address string to a public key on testnet
-        const x = formData.address
+        const x = myAddress;
         const y = x.toString()
     
       
@@ -150,14 +141,17 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         console.log(myPublicKey)
         console.log(alicePubkey)
     
-        const provider = new DefaultProvider()
+        let provider = new DefaultProvider();
+        provider.updateNetwork(bsv.Networks.testnet);
+        
         if(TransferTxid==="")
         {
           TransferTxid=deployedTxId 
         }
         console.log("index"+vote_atOutputIndex)
         const tx = await provider.getTransaction(TransferTxid)
-    
+
+        console.log("hello")
         const meInstance = Identity.fromTx(tx, vote_atOutputIndex)
     
         // connect a signer
@@ -217,7 +211,12 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         vote_tokens=vote_tokens-1
         setvote_tokens(vote_tokens)
       };
+
+
+
+
       const handlReTransfer= async (formData: any) => {
+
         console.log(formData)
         const provider = new DefaultProvider()
         const  txcidx=formData.TransactionIdCustomer
@@ -283,7 +282,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       };
 
   return (
-    <LocalStateProvider value={{isConnected, myPubkey, myAddress,  handleSubmit,  sensiletLogin, ElectionName, setElectionName, HeadName, setHeadName, totalSupply, setTotalSupply, CanParticipate, setCanParticipate, CanVote, setCanVote}}>
+    <LocalStateProvider value={{isConnected, myPubkey, myAddress,setmyAddress,  handleSubmit,handleTransfer,  sensiletLogin, ElectionName, setElectionName, HeadName, setHeadName, totalSupply, setTotalSupply, CanParticipate, setCanParticipate, CanVote, setCanVote}}>
       {children}
     </LocalStateProvider>
   );
