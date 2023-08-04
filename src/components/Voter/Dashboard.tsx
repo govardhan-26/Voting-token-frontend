@@ -1,25 +1,16 @@
-import React, { useEffect, useRef, useState } from 'react'
-import Navbar from '../Navbar'
-// import './Admin_dashboard.css'
-import { DefaultProvider, SensiletSigner, toHex } from 'scrypt-ts';
-import { useElectioncreation } from '../Context'; 
+import React, { useState } from 'react'
+import Voter_navbar from './Voter_navbar'
+import { useElectioncreation } from '../Context';
 
-
-const Admin_dashboard = () => {
-
+const Dashboard = () => {
   const { sensiletLogin, isConnected} = useElectioncreation(); 
   const [Name, setName] = useState("Shubham Goutham");
   const [Email, setEmail] = useState("shubh@gmail.com");
   const [NID, setNID] = useState("1234 2013 2548 2312");
   const [Username, setUsername] = useState("Shubh");
-
-    useEffect(() => {
-        console.log(isConnected);
-    }, )
-
   return (
-    <div className="admin-Container flex">
-        <Navbar/>
+    <div className='flex'>
+        <Voter_navbar/>
         <div className="profile text-[130%] w-full m-[8%] text-black flex flex-col items-center" >
           <div className='flex p-[1%] m-[2%] w-[50%] justify-between '>
               <label ><b>Name</b></label>
@@ -41,10 +32,9 @@ const Admin_dashboard = () => {
               <b>Connect to Wallet</b> 
               <button className='border-[0.5px] border-black rounded-[5px] bg-[#140026] mr-[2rem] text-[#E8E8E8] pt-[3px] pb-[3px] pl-[2px] pr-[2px] w-[20%]' onClick={sensiletLogin}> Connect</button>
           </div>
-            
         </div>
     </div>
   )
 }
 
-export default Admin_dashboard
+export default Dashboard

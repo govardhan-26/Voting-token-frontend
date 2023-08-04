@@ -1,7 +1,7 @@
 import React from 'react'
 import Navbar from '../Navbar'
 import './Voter_list.css'
-import { useElectioncreation } from '../Context'; 
+import { useElectioncreation } from '../../Context'; 
 
 
 const Voter_list = () => {

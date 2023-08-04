@@ -54,7 +54,7 @@ const Admin_register = () => {
                     <label htmlFor="password">Confirm Password</label>
                     <input type="password" id="password" placeholder="password"/>
                     <button className="login-button">Register</button>
-                    <p className="no-acnt">Already Had an Account ? <a href="#register">Login</a></p>
+                    <p className="no-acnt">Already Had an Account ? <a href="/admin_login">Login</a></p>
                     {/* <div className="neucron">
                         <p className="neucron-button">Register Using Neucron </p>
                         <img src={neucron} alt="Neucron"/>

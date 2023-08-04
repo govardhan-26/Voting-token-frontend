@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import Create_election from "./Create_Election/Create_election";
+import Create_election from "./Create_election";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);

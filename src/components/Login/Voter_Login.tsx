@@ -34,7 +34,7 @@ const Voter_register = () => {
         <div className="main-container">
             <div className="container">
                 <div className='heading'>
-                    <h1>Admin Login</h1>
+                    <h1>Voter Login</h1>
                 </div>
                 <div className="selection-container">
                     <div className="selection">
@@ -51,7 +51,7 @@ const Voter_register = () => {
                     <label htmlFor="password">Password</label>
                     <input type="password" id="password" placeholder="password" onChange={(e)=>{setPassword(e.target.value)}}/>
                     <button className="login-button">Login</button>
-                    <p className="no-acnt">No Account ? <a href="/admin_register">Register</a></p>
+                    <p className="no-acnt">No Account ? <a href="/voter_register">Register</a></p>
                     {/* <div className="neucron">
                         <p className="neucron-button">Register Using Neucron </p>
                         <img src={neucron} alt="Neucron"/>

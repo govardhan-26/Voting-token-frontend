@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import Navbar from '../Navbar'
+import Navbar from './Navbar'
 // import './Create_election.css'
 
 import { PubKey, SensiletSigner, bsv, toByteString, toHex } from 'scrypt-ts';
@@ -7,7 +7,7 @@ import { useElectioncreation } from '../Context';
 
 
 const Create_election = () => {
-    const {isConnected,  ElectionName, setElectionName, HeadName, setHeadName, totalSupply, setTotalSupply, AadharCard, setAadharCard} = useElectioncreation();
+    const {isConnected,  ElectionName, setElectionName, HeadName, setHeadName, totalSupply, setTotalSupply, AadharCard, setAadharCard, } = useElectioncreation();
 
     useEffect(() => {
         console.log(isConnected);
