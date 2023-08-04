@@ -4,6 +4,8 @@ import { useState, useRef } from "react";
 import { DefaultProvider, SensiletSigner, PubKey, toHex, sha256, toByteString, bsv, MethodCallOptions, findSig, SignatureResponse } from "scrypt-ts";
 import { HelloWorld } from "../contracts/helloworld";
 import { Identity } from "../contracts/identity";
+import { collection, addDoc } from "firebase/firestore"; 
+import { db } from "../firebase";
 
 const LocalStateContext = createContext<any>(null);
 
@@ -280,7 +282,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
           console.error("sensiletLogin failed", error);
           alert("sensiletLogin failed")
         }
-      };
+      }; 
 
   return (
     <LocalStateProvider value={{isConnected, myPubkey, myAddress,  handleSubmit,  sensiletLogin, ElectionName, setElectionName, HeadName, setHeadName, totalSupply, setTotalSupply, CanParticipate, setCanParticipate, CanVote, setCanVote}}>
@@ -291,6 +293,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 
 function useElectioncreation() {
   const all = useContext(LocalStateContext);
+  console.log(all);
   return all;
 }
 

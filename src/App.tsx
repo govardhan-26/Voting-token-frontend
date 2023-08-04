@@ -5,6 +5,7 @@ import Navbar from './components/Navbar';
 import Admin_dashboard from './components/Dashboard/Admin_dashboard';
 import Create_election from './components/Create_Election/Create_election';
 import {ElectionStateProvider, useElectioncreation} from './components/Context'
+import Voter_Login from './components/Voter_Login/Voter_Login';
 
 function App() {
   
@@ -15,6 +16,7 @@ function App() {
       <Routes>
           <Route path='/' element={<Admin_dashboard/>}/>
           <Route path='/Create_election' element={<Create_election/>}/>
+          <Route path='/Voter_Login' element={<Voter_Login/>}/>
       </Routes>    
     </BrowserRouter>
     </ElectionStateProvider>
