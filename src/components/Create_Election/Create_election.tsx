@@ -1,5 +1,8 @@
 import React, { useEffect } from 'react'
 import Navbar from '../Navbar'
+import { addDoc } from 'firebase/firestore';
+import { collection } from 'firebase/firestore';
+import { db } from '../../firebase';
 // import './Create_election.css'
 
 import { PubKey, SensiletSigner, bsv, toByteString, toHex } from 'scrypt-ts';
@@ -11,10 +14,26 @@ const Create_election = () => {
 
     useEffect(() => {
         console.log(isConnected);
+        console.log("The Election name is - ",ElectionName);
+        console.log("The HeadName is - ",HeadName);
     }, )
-  
 
-    const {handleSubmit} = useElectioncreation();
+    async function submitbase(){
+  const docRef = await addDoc(collection(db, "cities"), {
+    name:ElectionName,
+    country: HeadName,
+  });
+  console.log("Document written with ID: ", docRef.id);
+    }
+
+    const handleSubmit1 = (e) =>{
+        e.preventDefault();
+        submitbase();
+    }
+
+    const {handleSubmit} =useElectioncreation();
+    
+    
 
   return (
     <div className='flex'>
@@ -23,7 +42,7 @@ const Create_election = () => {
             
             <div className="p-[1%] m-[1%] h-full">
 
-                <form onSubmit={handleSubmit} className='flex flex-col  h-full' >
+                <form onSubmit={handleSubmit1} className='flex flex-col  h-full' >
                     <div className='flex m-[2%]'>
                         <label className='flex justify-start w-[50%]' >Election Name</label>  
                         <input type="text" className='border border-black w-[50%] rounded-[5px] bg-[#EDEBEB] h-[3rem]' name="electin_name" id="electin_name" value={ElectionName} onChange={(e) =>setElectionName(e.target.value)}/>
