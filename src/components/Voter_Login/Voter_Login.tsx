@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import Navbar from '../Navbar'
+import Navbar from '../Admin/Navbar'
 // import './Admin_dashboard.css'
 import { DefaultProvider, SensiletSigner, toHex } from 'scrypt-ts';
 import { useElectioncreation } from '../Context';

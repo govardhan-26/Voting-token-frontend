@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import Navbar from '../Navbar'
+import Navbar from './Navbar'
 import { addDoc } from 'firebase/firestore';
 import { collection } from 'firebase/firestore';
 import { db } from '../../firebase';
@@ -7,6 +7,7 @@ import { db } from '../../firebase';
 
 import { PubKey, SensiletSigner, bsv, toByteString, toHex } from 'scrypt-ts';
 import { useElectioncreation } from '../Context';
+
 
 
 const Create_election = () => {

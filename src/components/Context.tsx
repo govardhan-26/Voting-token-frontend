@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { createContext } from "react";
 import { useState, useRef } from "react";
-import { DefaultProvider, SensiletSigner, PubKey, toHex, sha256, toByteString, bsv, MethodCallOptions, findSig, SignatureResponse } from "scrypt-ts";
+import { DefaultProvider, DefaultProviderOption, SensiletSigner, PubKey, toHex, sha256, toByteString, bsv, MethodCallOptions, findSig, SignatureResponse } from "scrypt-ts";
 import { HelloWorld } from "../contracts/helloworld";
 import { Identity } from "../contracts/identity";
 import { collection, addDoc } from "firebase/firestore"; 
@@ -14,24 +14,19 @@ const LocalStateProvider = LocalStateContext.Provider;
 
 function ElectionStateProvider({ children }) {
       const x="Sensilate";
-    
       const [isConnected, setConnected] = useState(false);
-    
       const signerRef = useRef<SensiletSigner>();
-    
-      const [contract, setContract] = useState<HelloWorld | undefined>(undefined)
-    
+      // const [contract, setContract] = useState<HelloWorld | undefined>(undefined)
       const [deployedTxId, setDeployedTxId] = useState<string>("")
-    
       const [myPubkey, setMyPubkey] = useState("");
       const [myAddress, setmyAddress] = useState<string>("")
-
       const [ElectionName, setElectionName] = useState("MLA");
       const [HeadName, setHeadName] = useState("Shubham Goutam");
       const [totalSupply, setTotalSupply] = useState(10);
       const [CanVote, setCanVote] = useState("");
       const [CanParticipate, setCanParticipate] = useState("");
-     
+
+      
       const formData = {
         ElectionName,
         HeadName,
@@ -71,38 +66,19 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
             alert("Please connect wallet first.");
             return;
           }
-          
           let vote_deployTx: bsv.Transaction
           // last contract calling transaction
-    
           // contract output index
-
-          // console.log(formData);
-          // // const name = formData.tokenName;
-          // const Token_Name = formData.ElectionName
-          // const Protocol_Name = formData.HeadName
-    
-          // // const Token_Symbol = formData.symbol
-    
-          // const Token_supply = formData.totalSupply
-    
           setMintedvote_tokens(totalSupply)
           setvote_tokens(totalSupply)
           const vote_satoshisIssued = totalSupply
-    
-    
           const Data_On_chain = "...................................... Token_Name:" + ElectionName + " Protocol_Name:" + HeadName +  " Token_Supply:" + totalSupply + ".................................."
-
 
           console.log(Data_On_chain);
           console.log(myPubkey);
-
           // I am the issuer, and the first user as well
-    
           const initialInstance = new Identity(PubKey(toHex(myPubkey)), toByteString(Data_On_chain, true))
-          
           console.log(initialInstance);
-          
           // there is one key in the signer, that is `myPrivateKey` (added by default)
           const signer = signerRef.current as SensiletSigner;
           console.log(signer);
@@ -114,7 +90,6 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
           const idx = vote_deployTx.id;
           console.log("Deployed");
 
-          
           setDeployedTxId(idx)
     
         } catch (e) {
@@ -124,42 +99,39 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       };
     
     
-      const handlTransfer = async (formData: any) => {
+      const handleTransfer = async (e :React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
         const bsvNetwork = 'testnet'
         const vote_satoshisIssued:any= vote_tokens
         let lastCallTx: bsv.Transaction
         let vote_LastCall: bsv.Transaction
         // contract output index
-    
-    
         let vote_deployTx: bsv.Transaction
         // last contract calling transaction
         let vote_lastCallTx: bsv.Transaction
         // contract output index
         const vote_atOutputIndex = transferIndex;
-    
         const vote_satoshisSendToAlice = 1
-    
-     
         // Convert address string to a public key on testnet
-        const x = formData.address
+        const x = myAddress;
         const y = x.toString()
     
-      
         const alicePubkey = bsv.PublicKey.fromString(y);
-    
         const myPublicKey = myPubkey
         console.log(myPublicKey)
         console.log(alicePubkey)
     
-        const provider = new DefaultProvider()
+        let provider = new DefaultProvider();
+        provider.updateNetwork(bsv.Networks.testnet);
+        
         if(TransferTxid==="")
         {
           TransferTxid=deployedTxId 
         }
         console.log("index"+vote_atOutputIndex)
         const tx = await provider.getTransaction(TransferTxid)
-    
+
+        console.log("hello")
         const meInstance = Identity.fromTx(tx, vote_atOutputIndex)
     
         // connect a signer
@@ -182,7 +154,6 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         //         pubKeyOrAddrToSign: $publickey.toAddress()
         //     } as MethodCallOptions<P2PKH>
         // );
-    
         const { tx: transferToAliceTx } = await meInstance.methods.transfer1(
           (sigResponses: SignatureResponse[]) => findSig(sigResponses, bsv.PublicKey.fromString(myPubkey)),
           PubKey(toHex(alicePubkey)),
@@ -219,15 +190,16 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         vote_tokens=vote_tokens-1
         setvote_tokens(vote_tokens)
       };
+
+
       const handlReTransfer= async (formData: any) => {
+
         console.log(formData)
         const provider = new DefaultProvider()
         const  txcidx=formData.TransactionIdCustomer
         const tx = await provider.getTransaction(txcidx.toString())
     
         // connect a signer
-  
-    
         const bobNextInstance= Identity.fromTx(tx,formData.OutputIndex)
       
         const signer = signerRef.current as SensiletSigner;
@@ -251,9 +223,9 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     
         console.log("Recallable of kyc token called :  "+recallTx.id)
         setRecall(recallTx.id)
-    
       }
     
+
       const sensiletLogin = async () => {
         try {
           const provider = new DefaultProvider();
@@ -273,9 +245,6 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
           setConnected(true);
           console.log(isConnected);
          setmyAddress(pubkey.toAddress().toString());
-         
-    
-    
         }
     
         catch (error) {
@@ -285,7 +254,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       }; 
 
   return (
-    <LocalStateProvider value={{isConnected, myPubkey, myAddress,  handleSubmit,  sensiletLogin, ElectionName, setElectionName, HeadName, setHeadName, totalSupply, setTotalSupply, CanParticipate, setCanParticipate, CanVote, setCanVote}}>
+    <LocalStateProvider value={{isConnected, myPubkey, myAddress,setmyAddress,  handleSubmit,handleTransfer,  sensiletLogin, ElectionName, setElectionName, HeadName, setHeadName, totalSupply, setTotalSupply, CanParticipate, setCanParticipate, CanVote, setCanVote}}>
       {children}
     </LocalStateProvider>
   );

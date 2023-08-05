@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import Create_election from "./Create_Election/Create_election";
+import Create_election from "./Create_election";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -70,7 +70,7 @@ const Navbar = () => {
           <div className="flex-1">
             <ul className="pt-2 pb-4 space-y-1 text-sm">
               <li className="rounded-sm">
-                <Link to="/" className="flex items-center p-2 space-x-3 rounded-md">
+                <Link to="/admin_dashboard" className="flex items-center p-2 space-x-3 rounded-md">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -221,7 +221,7 @@ const Navbar = () => {
                  
               </li>
               <li className="rounded-sm">
-                <Link to='#' className="flex items-center p-2 space-x-3 rounded-md">
+                <Link to='/Results' className="flex items-center p-2 space-x-3 rounded-md">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -242,7 +242,7 @@ const Navbar = () => {
                     />
                   </svg>
   
-                  <span className="text-gray-100"> Settings </span>
+                  <span className="text-gray-100"> Results </span>
                 </Link>
               </li>
               <li className="rounded-sm">
