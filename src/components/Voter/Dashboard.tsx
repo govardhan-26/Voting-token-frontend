@@ -4,10 +4,12 @@ import { useElectioncreation } from '../Context';
 
 const Dashboard = () => {
   const { sensiletLogin, isConnected} = useElectioncreation(); 
+
   const [Name, setName] = useState("Shubham Goutham");
   const [Email, setEmail] = useState("shubh@gmail.com");
   const [NID, setNID] = useState("1234 2013 2548 2312");
   const [Username, setUsername] = useState("Shubh");
+  
   return (
     <div className='flex'>
         <Voter_navbar/>
