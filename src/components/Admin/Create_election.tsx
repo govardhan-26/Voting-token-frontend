@@ -9,30 +9,30 @@ import { PubKey, SensiletSigner, bsv, toByteString, toHex } from 'scrypt-ts';
 import { useElectioncreation } from '../Context';
 
 
-
 const Create_election = () => {
-    const {isConnected,  ElectionName, setElectionName, HeadName, setHeadName, totalSupply, setTotalSupply, AadharCard, setAadharCard} = useElectioncreation();
+    const {isConnected,  ElectionName, setElectionName, HeadName, setHeadName, totalSupply, setTotalSupply, AadharCard, setAadharCard, handleSubmit} = useElectioncreation();
 
-    useEffect(() => {
-        console.log(isConnected);
-        console.log("The Election name is - ",ElectionName);
-        console.log("The HeadName is - ",HeadName);
-    }, )
+    // useEffect(() => {
+    //     console.log(isConnected);
+    //     console.log("The Election name is - ",ElectionName);
+    //     console.log("The HeadName is - ",HeadName);
+    // }, )
 
     async function submitbase(){
-  const docRef = await addDoc(collection(db, "cities"), {
-    name:ElectionName,
-    country: HeadName,
-  });
-  console.log("Document written with ID: ", docRef.id);
+    const docRef = await addDoc(collection(db, "Elections"), {
+        Election_Name:ElectionName,
+        Commision_Head: HeadName,
+        No_of_voters : totalSupply
+    });
+    console.log("Document written with ID: ", docRef.id);
     }
 
-    const handleSubmit1 = (e) =>{
+    const handleSubmit1 = (e : React.FormEvent<HTMLFormElement>) =>{
         e.preventDefault();
         submitbase();
+        handleSubmit();
     }
 
-    const {handleSubmit} =useElectioncreation();
     
     
 

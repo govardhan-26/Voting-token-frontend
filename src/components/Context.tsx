@@ -27,11 +27,11 @@ function ElectionStateProvider({ children }) {
       const [CanParticipate, setCanParticipate] = useState("");
 
       
-      const formData = {
-        ElectionName,
-        HeadName,
-        totalSupply,
-      };
+      // const formData = {
+      //   ElectionName,
+      //   HeadName,
+      //   totalSupply,
+      // };
     
       let [vote_tokens, setvote_tokens] = useState<any>(0);
       const [Mintedvote_tokens, setMintedvote_tokens] = useState<any>(0);
@@ -58,8 +58,7 @@ function ElectionStateProvider({ children }) {
       };
       
       
-const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+const handleSubmit = async () => {
         try {
           if (!isConnected || !myPubkey) {
             setConnected(false);
@@ -72,7 +71,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
           setMintedvote_tokens(totalSupply)
           setvote_tokens(totalSupply)
           const vote_satoshisIssued = totalSupply
-          const Data_On_chain = "...................................... Token_Name:" + ElectionName + " Protocol_Name:" + HeadName +  " Token_Supply:" + totalSupply + ".................................."
+          const Data_On_chain = "......................................Token_Name:" + ElectionName + " Protocol_Name:" + HeadName +  " Token_Supply:" + totalSupply + ".................................."
 
           console.log(Data_On_chain);
           console.log(myPubkey);

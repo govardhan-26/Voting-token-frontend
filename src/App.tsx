@@ -13,6 +13,7 @@ import Voter_Login from './components/Login/Voter_Login';
 import Voter_list from './components/Admin/Voter_list/Voter_list';
 import Dashboard from './components/Voter/Dashboard';
 import Err_page from './components/Err_page';
+import Elections from './components/Admin/Elections';
 
 function App() {
   
@@ -31,6 +32,7 @@ function App() {
           <Route path='/voter_list' element={<Voter_list/>}/>
           <Route path='/Results' element={<Results/>}/>
           <Route path='*' element={<Err_page/>}/>
+          <Route path='/admin_dashboard/elections' element={<Elections/>}/>
       </Routes>    
     </BrowserRouter>
     </ElectionStateProvider>
