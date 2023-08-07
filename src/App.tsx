@@ -14,6 +14,7 @@ import Voter_list from './components/Admin/Voter_list/Voter_list';
 import Dashboard from './components/Voter/Dashboard';
 import Err_page from './components/Err_page';
 import Elections from './components/Admin/Elections';
+import Voter_Elections from './components/Voter/Elections';
 
 function App() {
   
@@ -32,6 +33,7 @@ function App() {
           <Route path='/voter_list' element={<Voter_list/>}/>
           <Route path='/Results' element={<Results/>}/>
           <Route path='*' element={<Err_page/>}/>
+          <Route path='/voter_Dashboard/elections' element={<Voter_Elections/>}/>
           <Route path='/admin_dashboard/elections' element={<Elections/>}/>
       </Routes>    
     </BrowserRouter>

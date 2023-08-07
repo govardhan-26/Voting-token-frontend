@@ -1,27 +1,28 @@
-import React from 'react'
-import Navbar from '../Navbar'
-import './Voter_list.css'
-import { useElectioncreation } from '../../Context'; 
+import React, { useEffect, useState } from "react";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from "../../../firebase";
+import { useElectioncreation } from "../../Context";
 
+const VoterList = () => {
+  const { id } = useElectioncreation();
+  const votersRef = collection(db, "Voters");
+  const [voters, setVoters] = useState([]);
 
-const Voter_list = () => {
-    const {handleTransfer, setmyAddress} = useElectioncreation();
+  useEffect(() => {
+    const fetchVoters = async () => {
+      try {
+        const q = query(votersRef, where("Election_id", "==", id));
+        const querySnapshot = await getDocs(q);
+        const voterData = querySnapshot.docs.map((doc) => doc.data());
+      } catch (error) {
+        console.error("Error fetching voters:", error);
+      }
+    };
 
+    fetchVoters();
+  }, [id]);
 
-  return (
-    <div className='flex h-screen w-screen'> 
-        <Navbar/>
-        <div className='h-full w-full flex justify-center items-center'>
-            <div className="Voter-list-tokenform">
-                <form onSubmit={handleTransfer} className='transfer-form'>
-                    <label htmlFor="Public key">Enter the Publick Key</label>
-                    <input type="text" placeholder='Enter Public Key' onChange={(e) => {setmyAddress(e.target.value)}}/>
-                    <button type='submit'>Transfer</button>
-                </form>
-            </div>
-        </div>
-    </div>
-  )
-}
+  return <></>;
+};
 
-export default Voter_list
+export default VoterList;
