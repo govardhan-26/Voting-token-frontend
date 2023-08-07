@@ -22,7 +22,7 @@ const VoterList = () => {
     fetchVoters();
   }, [id]);
 
-  return <></>;
+  return <>hello</>;
 };
 
 export default VoterList;
