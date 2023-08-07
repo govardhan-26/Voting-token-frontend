@@ -130,7 +130,6 @@ const handleSubmit = async () => {
         console.log("index"+vote_atOutputIndex)
         const tx = await provider.getTransaction(TransferTxid)
 
-        console.log("hello")
         const meInstance = Identity.fromTx(tx, vote_atOutputIndex)
     
         // connect a signer

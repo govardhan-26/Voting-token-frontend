@@ -22,7 +22,9 @@ const Create_election = () => {
     const docRef = await addDoc(collection(db, "Elections"), {
         Election_Name:ElectionName,
         Commision_Head: HeadName,
-        No_of_voters : totalSupply
+        No_of_voters : totalSupply,
+        voterlist : [],
+        candidatelist:[]
     });
     console.log("Document written with ID: ", docRef.id);
     }
