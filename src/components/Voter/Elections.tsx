@@ -56,10 +56,24 @@ const Elections = () => {
       await updateDoc(electionDoc, {
         voterlist: arrayUnion({ NID, Name }),
       });
-
+      alert("voter registration successfull");
       console.log("Voter added to voterlist successfully");
     } catch (error) {
       console.error("Error adding voter to voterlist: ", error);
+    }
+  }
+  async function addVoterToNomination(electionId: string) {
+    try {
+      const electionDoc = doc(db, "Elections", electionId);
+
+      // Update the document's voterlist array by adding the new voter's NID
+      await updateDoc(electionDoc, {
+        candidatelist: arrayUnion({ NID, Name }),
+      });
+      alert("Nomination successfull");
+      console.log("Voter added to candidatelist successfully");
+    } catch (error) {
+      console.error("Error adding voter to candidatelist: ", error);
     }
   }
 
@@ -80,9 +94,15 @@ const Elections = () => {
               <div className="flex flex-row-reverse justify-between w-[100%] ">
                 <button
                   className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  onClick={() => addVoterToNomination(election.id)}
+                >
+                  Nomination
+                </button>
+                <button
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                   onClick={() => addVoterToVoterlist(election.id)}
                 >
-                  Register
+                  Register to Vote
                 </button>
               </div>
             </div>
