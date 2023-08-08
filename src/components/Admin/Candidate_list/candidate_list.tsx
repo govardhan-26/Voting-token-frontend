@@ -11,13 +11,13 @@ import { Link } from "react-router-dom";
 import { db } from "../../../firebase";
 import { useElectioncreation } from "../../Context";
 import Navbar from "../Navbar";
-import "./Voter_list.css";
+import "./candidate_list.css";
 
-const VoterList = () => {
+const CandidateList = () => {
   const { id, setid } = useElectioncreation();
   const electionsRef = collection(db, "Elections");
 
-  const [voterLists, setVoterLists] = useState<string[]>([]);
+  const [candidateLists, setcandidateLists] = useState<string[]>([]);
 
   const { handleTransfer, setmyAddress } = useElectioncreation();
   useEffect(() => {
@@ -27,14 +27,14 @@ const VoterList = () => {
           query(electionsRef, where("Election_id", "==", id))
         );
 
-        const voterListsData: string[] = [];
+        const candidateListsData: string[] = [];
         querySnapshot.forEach((doc) => {
-          const voterList = doc.data().voterlist || [];
-          voterListsData.push(...voterList); // Spread the voterlist array into the main array
+          const candidateList = doc.data().candidatelist || [];
+          candidateListsData.push(...candidateList); // Spread the candidatelist array into the main array
         });
 
-        setVoterLists(voterListsData);
-        console.log("voterlist", voterListsData);
+        setcandidateLists(candidateListsData);
+        console.log("candidatelist", candidateListsData);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -48,20 +48,20 @@ const VoterList = () => {
       <Navbar />
       <div className="h-[100%] w-[100%] ">
         <div className="m-[5%] flex-col">
-          {voterLists.map((voter, voterid) => (
+          {candidateLists.map((candidate, candidateid) => (
             <div
-              key={voterid}
+              key={candidateid}
               className="w-[100%] p-[2%] flex m-2 border border-t border-2 border-black "
             >
               <div className="flex w-[50%]">
-                <p>Voter NID: {voter["NID"]}</p>
-                <p>Voter Name: {voter["Name"]}</p>
-                {/* <p>Election Head: {voter.Commision_Head}</p> */}
-                <div className="flex flex-row justify-between w-[100%] ">
+                <p>candidate NID: {candidate["NID"]}</p>
+                <p>candidate Name: {candidate["Name"]}</p>
+                {/* <p>Election Head: {candidate.Commision_Head}</p> */}
+                {/* <div className="flex flex-row justify-between w-[100%] ">
                   <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Transfer token{" "}
+                    Candidate List{" "}
                   </button>
-                </div>
+                </div> */}
               </div>
             </div>
           ))}
@@ -71,4 +71,4 @@ const VoterList = () => {
   );
 };
 
-export default VoterList;
+export default CandidateList;
