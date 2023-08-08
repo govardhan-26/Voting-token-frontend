@@ -19,7 +19,7 @@ const VoterList = () => {
       }
     };
 
-    fetchVoters();
+    fetchVoters();  
   }, [id]);
 
   return <>hello</>;
