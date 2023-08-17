@@ -44,7 +44,7 @@ const Elections = () => {
                 <p>Election Head: {election.Commision_Head}</p>
               </div>
               <div className="flex flex-row justify-between w-[100%] ">
-                <Link to="/voter_list">
+                <Link to={'/admin_dashboard/elections/'+ election.Election_id + '/voter_list/'}>
                   <button
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                     onClick={() => {
@@ -55,7 +55,7 @@ const Elections = () => {
                     Voter List
                   </button>
                 </Link>
-                <Link to="candidate_list">
+                <Link to={'/admin_dashboard/elections/'+ election.Election_id + '/candidate_list/'}>
                   <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => {
                       // console.log(election.voterlist);
                       setid(election.Election_id);

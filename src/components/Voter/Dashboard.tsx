@@ -6,8 +6,8 @@ const Dashboard = () => {
   const {
     sensiletLogin,
     isConnected,
-    Username,
-    setUsername,
+    UserPublicKey,
+    setUserPublicKey,
     NID,
     setNID,
     Email,
@@ -45,9 +45,9 @@ const Dashboard = () => {
         </div>
         <div className="flex p-[1%] m-[2%] w-[50%] justify-between ">
           <label>
-            <b>Username</b>
+            <b>public key</b>
           </label>
-          <p className="mx-auto pl-[10rem]">{Username}</p>
+          <p className="mx-auto pl-[10rem]">{UserPublicKey}</p>
         </div>
         <div className="flex p-[1%] m-[2%] w-[50%] mx-auto justify-between">
           <b>Connect to Wallet</b>

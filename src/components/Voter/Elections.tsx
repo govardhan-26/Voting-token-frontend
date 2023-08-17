@@ -19,8 +19,8 @@ const Elections = () => {
   const {
     sensiletLogin,
     isConnected,
-    Username,
-    setUsername,
+    UserPublicKey,
+    setUserPublickKey,
     NID,
     setNID,
     Email,
@@ -53,8 +53,9 @@ const Elections = () => {
       const electionDoc = doc(db, "Elections", electionId);
 
       // Update the document's voterlist array by adding the new voter's NID
+      console.log(UserPublicKey);
       await updateDoc(electionDoc, {
-        voterlist: arrayUnion({ NID, Name }),
+        voterlist: arrayUnion({ NID, Name, UserPublicKey }),
       });
       alert("voter registration successfull");
       console.log("Voter added to voterlist successfully");
@@ -68,7 +69,7 @@ const Elections = () => {
 
       // Update the document's voterlist array by adding the new voter's NID
       await updateDoc(electionDoc, {
-        candidatelist: arrayUnion({ NID, Name }),
+        candidatelist: arrayUnion({ NID, Name, UserPublicKey }),
       });
       alert("Nomination successfull");
       console.log("Voter added to candidatelist successfully");
