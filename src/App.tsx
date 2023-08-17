@@ -13,6 +13,9 @@ import Voter_Login from './components/Login/Voter_Login';
 import Voter_list from './components/Admin/Voter_list/Voter_list';
 import Dashboard from './components/Voter/Dashboard';
 import Err_page from './components/Err_page';
+import Landing from './components/Landing/Landing';
+import Protected from './components/Admin/Protected';
+import Protect from './components/Voter/Protect';
 
 function App() {
   
@@ -21,15 +24,16 @@ function App() {
     <ElectionStateProvider>
     <BrowserRouter>
       <Routes>
+          <Route path='/' element={<Landing/>}/>
           <Route path='/admin_register' element={<Admin_register/>}/>
           <Route path='/admin_login' element={<Admin_Login/>}/>
           <Route path='/voter_login' element={<Voter_Login/>}/>
           <Route path='/voter_register' element={<Voter_register/>}/>
-          <Route path='/admin_dashboard' element={<Admin_dashboard/>}/>
-          <Route path='/voter_Dashboard' element={<Dashboard/>}/>
-          <Route path='/Create_election' element={<Create_election/>}/>
-          <Route path='/voter_list' element={<Voter_list/>}/>
-          <Route path='/Results' element={<Results/>}/>
+          <Route path='/admin_dashboard' element={<Protected Component ={Admin_dashboard}/>}/>
+          <Route path='/voter_Dashboard' element={<Protect Component ={Dashboard}/>}/>
+          <Route path='/Create_election' element={<Protected Component ={Create_election}/>}/>
+          <Route path='/voter_list' element={<Protected Component ={Voter_list}/>}/>
+          <Route path='/Results' element={<Protected Component ={Results}/>}/>
           <Route path='*' element={<Err_page/>}/>
       </Routes>    
     </BrowserRouter>

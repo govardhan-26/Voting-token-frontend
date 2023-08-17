@@ -1,0 +1,96 @@
+.landing-container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+}
+
+.landing-logo {
+  position: absolute;
+  top: 2px;
+  left: 20px;
+  width: 100px; /* Adjust the width as needed */
+  height: auto;
+}
+
+.left-section {
+  display: flex;
+  height: 100%;
+  width: 60%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* Align content at the center */
+  padding: 40px 20px; 
+  box-sizing: border-box;
+  background-color: #ffffff;
+}
+
+.heading {
+  width: 100%;
+  height: 10%;
+  text-align: center;
+  font-size: 200%;
+  margin-bottom: 20px;
+}
+
+.contains {
+  display: flex;
+  flex-direction: column;
+  height: 90%;
+  width: 35%;
+}
+
+.right-section {
+  flex: 1;
+  background-color: #2C72E2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.role-selection {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 30px;
+  height: 25%;
+  width: 100%;
+  justify-content: space-evenly;
+}
+
+.centers{
+  width: 100%;
+  height: 10%;
+  text-align: center;
+  font-size: 160%;
+}
+
+.selection-admin,
+.selection-voter {
+  height: 70%;
+  width: 70%;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border 0.3s ease;
+  border: 5px solid transparent; /* Transparent border to make space between images */
+  margin: 5px; /* Adding margin for spacing */
+}
+
+.selection-admin:hover,
+.selection-voter:hover {
+  border: 5px solid blue; /* Adjusted border color to cover the circumference */
+}
+
+.next-button{
+  height : 40px;
+  width : 280px;
+  color: blue;
+  font-weight: bolder;
+  text-align: center;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: larger;  
+}
+/* Other styles remain unchanged */
