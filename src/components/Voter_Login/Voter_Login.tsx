@@ -63,7 +63,7 @@ onAuthStateChanged(auth, (user) => {
       <Navbar />
       <button
         onClick={handleLogin}
-        className="flex items-center justify-center w-full px-4 py-2 text-sm text-white text-gray-700 border border-gray-300 rounded-lg hover:border-gray-500 focus:border-gray-500"
+        className=""
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -77,7 +77,7 @@ onAuthStateChanged(auth, (user) => {
       </button>
       <button
         onClick={makeGetRequest}
-        className="flex items-center justify-center w-full px-4 py-2 text-sm text-white text-gray-700 border border-gray-300 rounded-lg hover:border-gray-500 focus:border-gray-500"
+        className=""
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

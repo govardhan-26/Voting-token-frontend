@@ -53,18 +53,18 @@ const Create_election = () => {
   };
 
   return (
-    <div className="flex">
+    <div className="flex w-full h-full">
       <Navbar />
-      <div className="w-full h-full flex flex-col ">
-        <div className="p-[1%] m-[1%] h-full">
-          <form onSubmit={handleSubmit1} className="flex flex-col  h-full">
-            <div className="flex m-[2%]">
-              <label className="flex justify-start w-[50%]">
+      <div className="w-full h-full relative ">
+        <div className="absolute left-[25rem] top-[3.7rem] h-full flex items-center">
+          <form onSubmit={handleSubmit1} className="flex flex-col h-full w-[18rem]">
+            <div className="flex flex-col m-1 gap-0 ">
+              <label className="flex justify-start w-full m-2 ml-0 ">
                 Election Name
               </label>
               <input
                 type="text"
-                className="border border-black w-[50%] rounded-[5px] bg-[#EDEBEB] h-[3rem]"
+                className="border border-black p-2 rounded-[5px] bg-[#EEEEEE] h-[3rem]"
                 name="electin_name"
                 id="electin_name"
                 value={ElectionName}
@@ -72,13 +72,13 @@ const Create_election = () => {
               />
             </div>
             <br />
-            <div className="flex m-[2%]">
-              <label className="flex justify-start w-[50%]" htmlFor="head">
+            <div className="relative top-[-1rem] flex flex-col m-1 gap-0 ">
+              <label className="w-full m-2 ml-0" htmlFor="head">
                 Commission Head Name
               </label>
               <input
                 type="text"
-                className="border border-black w-[50%] rounded-[5px] bg-[#EDEBEB] h-[3rem]"
+                className="border border-black w-full p-2 rounded-[5px] bg-[#EEEEEE]  h-[3rem]"
                 name="head"
                 id="head"
                 value={HeadName}
@@ -86,11 +86,11 @@ const Create_election = () => {
               />
             </div>
 
-            <div className="flex m-[2%]">
-              <label className="flex justify-start w-[50%]">No of Voters</label>
+            <div className="flex flex-col m-1">
+              <label className="flex justify-start m-2 ml-0 ">No of Voters</label>
               <input
                 type="text"
-                className="border border-black w-[50%] rounded-[5px] bg-[#EDEBEB] h-[3rem]"
+                className="border border-black w-full p-2 rounded-[5px] bg-[#EEEEEE]  h-[3rem]"
                 name="no_voters"
                 id="no_voters"
                 value={totalSupply}
@@ -98,11 +98,11 @@ const Create_election = () => {
               />
             </div>
 
-            <div className="flex m-[2%]">
-              <label className="flex justify-start w-[50%]">Aadhar Card</label>
+            <div className="flex flex-col m-1">
+              <label className="flex justify-start w-full m-2 ml-0">Aadhar Card</label>
               <input
                 type="text"
-                className="border border-black w-[50%] rounded-[5px] bg-[#EDEBEB] h-[3rem]"
+                className="border border-black w-full rounded-[5px] bg-[#EEEEEE]  h-[3rem]"
                 name="aadhar_card"
                 id="aadhar_card"
                 value={AadharCard}
@@ -110,8 +110,8 @@ const Create_election = () => {
               ></input>
             </div>
 
-            <div className="submit-button m-[2%]">
-              <button className="flex flex-row-reverse border border-black bg-[#140026] text-[#E8E8E8] rounded-[10px] p-[1rem]">
+            <div className="submit-button mt-4 flex flex-col relative ">
+              <button className="flex ml-[3.5rem]  mt-[10px] w-[10rem] absolute pl-6 bg-[#6268EA] text-[#E8E8E8] rounded-[10rem] p-[10px]">
                 Create Election
               </button>
             </div>
