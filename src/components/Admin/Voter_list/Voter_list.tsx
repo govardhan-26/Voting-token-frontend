@@ -3,45 +3,47 @@ import {
   DocumentData,
   QuerySnapshot,
   collection,
+  doc,
+  getDoc,
   getDocs,
   query,
   where,
 } from "firebase/firestore";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { db } from "../../../firebase";
 import { useElectioncreation } from "../../Context";
 import Navbar from "../Navbar";
 import "./Voter_list.css";
 
 const VoterList = () => {
-  const { id, setid } = useElectioncreation();
-  const electionsRef = collection(db, "Elections");
+  const { Election_id } = useParams();
 
   const [voterLists, setVoterLists] = useState<string[]>([]);
 
   const { handleTransfer, setmyAddress } = useElectioncreation();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const querySnapshot: QuerySnapshot<DocumentData> = await getDocs(
-          query(electionsRef, where("Election_id", "==", id))
-        );
+        // Fetch election details based on the Election_id
+        const electionDoc = doc(collection(db, "Elections"), Election_id);
+        const electionSnapshot = await getDoc(electionDoc);
 
-        const voterListsData: string[] = [];
-        querySnapshot.forEach((doc) => {
-          const voterList = doc.data().voterlist || [];
-          voterListsData.push(...voterList); // Spread the voterlist array into the main array
-        });
-
-        setVoterLists(voterListsData);
-        console.log("voterlist", voterListsData);
+        if (electionSnapshot.exists()) {
+          const electionData = electionSnapshot.data();
+          const voterList = electionData?.voterlist || [];
+          setVoterLists(voterList);
+        } else {
+          console.log("Election not found");
+        }
       } catch (error) {
+        console.log(Election_id);
         console.error("Error fetching data:", error);
       }
     };
-
     fetchData();
-  }, []);
+  }, [Election_id]);
+
 
   return (
     <div className="flex h-[100vh] w-[100vw]">

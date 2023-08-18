@@ -3,45 +3,49 @@ import {
   DocumentData,
   QuerySnapshot,
   collection,
+  doc,
+  getDoc,
   getDocs,
   query,
   where,
 } from "firebase/firestore";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { db } from "../../../firebase";
 import { useElectioncreation } from "../../Context";
 import Navbar from "../Navbar";
 import "./candidate_list.css";
 
 const CandidateList = () => {
-  const { id, setid } = useElectioncreation();
-  const electionsRef = collection(db, "Elections");
+  
+  const { Election_id } = useParams();
 
   const [candidateLists, setcandidateLists] = useState<string[]>([]);
 
   const { handleTransfer, setmyAddress } = useElectioncreation();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const querySnapshot: QuerySnapshot<DocumentData> = await getDocs(
-          query(electionsRef, where("Election_id", "==", id))
-        );
+        // Fetch election details based on the Election_id
+        const electionDoc = doc(collection(db, "Elections"), Election_id);
+        const electionSnapshot = await getDoc(electionDoc);
 
-        const candidateListsData: string[] = [];
-        querySnapshot.forEach((doc) => {
-          const candidateList = doc.data().candidatelist || [];
-          candidateListsData.push(...candidateList); // Spread the candidatelist array into the main array
-        });
-
-        setcandidateLists(candidateListsData);
-        console.log("candidatelist", candidateListsData);
+        if (electionSnapshot.exists()) {
+          const electionData = electionSnapshot.data();
+          const candidatelist = electionData?.candidatelist || [];
+          setcandidateLists(candidatelist);
+          console.log(candidateLists);
+        } else {
+          console.log("Election not found");
+        }
       } catch (error) {
+        console.log(Election_id);
         console.error("Error fetching data:", error);
       }
     };
-
     fetchData();
-  }, []);
+  }, [Election_id]);
+
 
   return (
     <div className="flex h-[100vh] w-[100vw]">

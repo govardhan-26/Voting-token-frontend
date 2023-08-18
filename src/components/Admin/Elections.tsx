@@ -53,7 +53,7 @@ const Elections = () => {
                   </div> 
                 </div>
               <div className="gap-[2rem] flex mt-3 font-light ">
-                <Link to="/voter_list">
+              <Link to={'/admin_dashboard/elections/'+ election.Election_id + '/voter_list/'}>
                   <button
                     className="bg-blue-500 hover:bg-blue-700 text-white rounded-[10rem] w-[120px] h-[30px]"
                     onClick={() => {
@@ -64,7 +64,7 @@ const Elections = () => {
                     Voter List
                   </button>
                 </Link>
-                <Link to="candidate_list">
+                <Link to={'/admin_dashboard/elections/'+ election.Election_id + '/candidate_list/'}>
                   <button className="bg-blue-500 hover:bg-blue-700 text-white rounded-[10rem] w-[120px] h-[30px]" onClick={() => {
                       // console.log(election.voterlist);
                       setid(election.Election_id);

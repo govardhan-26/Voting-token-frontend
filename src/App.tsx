@@ -31,8 +31,8 @@ function App() {
           <Route path='/admin_dashboard' element={<Admin_dashboard/>}/>
           <Route path='/voter_Dashboard' element={<Dashboard/>}/>
           <Route path='/Create_election' element={<Create_election/>}/>
-          <Route path='/voter_list' element={<Voter_list/>}/>
-          <Route path='/admin_Dashboard/elections/candidate_list' element={<CandidateList/>}/>
+          <Route path="/admin_dashboard/elections/:Election_id/voter_list" element={<Voter_list />} />
+          <Route path='/admin_dashboard/elections/:Election_id/candidate_list' element={<CandidateList/>}/>
           <Route path='/Results' element={<Results/>}/>
           <Route path='*' element={<Err_page/>}/>
           <Route path='/voter_Dashboard/elections' element={<Voter_Elections/>}/>
