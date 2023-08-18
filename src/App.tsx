@@ -10,12 +10,15 @@ import Results from './components/Admin/Results/Results';
 import Voter_register from './components/Register/Voter_register';
 import Admin_Login from './components/Login/Admin_Login';
 import Voter_Login from './components/Login/Voter_Login';
-import Voter_list from './components/Admin/Voter_list/Voter_list';
+import Voter_list from './components/Admin/Voter_list/Voter_list';  
 import Dashboard from './components/Voter/Dashboard';
 import Err_page from './components/Err_page';
 import Landing from './components/Landing/Landing';
 import Protected from './components/Admin/Protected';
 import Protect from './components/Voter/Protect';
+import Elections from './components/Admin/Elections';
+import Voter_Elections from './components/Voter/Elections';
+import CandidateList from './components/Admin/Candidate_list/candidate_list';
 
 function App() {
   
@@ -34,7 +37,11 @@ function App() {
           <Route path='/Create_election' element={<Protected Component ={Create_election}/>}/>
           <Route path='/voter_list' element={<Protected Component ={Voter_list}/>}/>
           <Route path='/Results' element={<Protected Component ={Results}/>}/>
+          <Route path="/admin_dashboard/elections/:Election_id/voter_list" element={<Voter_list />} />
+          <Route path='/admin_dashboard/elections/:Election_id/candidate_list' element={<CandidateList/>}/>
           <Route path='*' element={<Err_page/>}/>
+          <Route path='/voter_Dashboard/elections' element={<Voter_Elections/>}/>
+          <Route path='/admin_dashboard/elections' element={<Elections/>}/>
       </Routes>    
     </BrowserRouter>
     </ElectionStateProvider>
