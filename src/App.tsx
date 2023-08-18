@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import './App.css';
+// import './App.css';
 import Navbar from './components/Admin/Navbar';
 import Admin_dashboard from './components/Admin/Admin_dashboard';
 import Create_election from './components/Admin/Create_election';
@@ -10,7 +10,7 @@ import Results from './components/Admin/Results/Results';
 import Voter_register from './components/Register/Voter_register';
 import Admin_Login from './components/Login/Admin_Login';
 import Voter_Login from './components/Login/Voter_Login';
-import Voter_list from './components/Admin/Voter_list/Voter_list';  
+import Voter_list from './components/Admin/Voter_list/Voter_list';
 import Dashboard from './components/Voter/Dashboard';
 import Err_page from './components/Err_page';
 import Elections from './components/Admin/Elections';
@@ -31,9 +31,8 @@ function App() {
           <Route path='/admin_dashboard' element={<Admin_dashboard/>}/>
           <Route path='/voter_Dashboard' element={<Dashboard/>}/>
           <Route path='/Create_election' element={<Create_election/>}/>
-          {/* <Route path='/elections/:id/voter_list' element={<Voter_list/>}/> */}
-          <Route path="/admin_dashboard/elections/:Election_id/voter_list" element={<Voter_list />} />
-          <Route path='/admin_dashboard/elections/:Election_id/candidate_list' element={<CandidateList/>}/>
+          <Route path='/voter_list' element={<Voter_list/>}/>
+          <Route path='/admin_Dashboard/elections/candidate_list' element={<CandidateList/>}/>
           <Route path='/Results' element={<Results/>}/>
           <Route path='*' element={<Err_page/>}/>
           <Route path='/voter_Dashboard/elections' element={<Voter_Elections/>}/>

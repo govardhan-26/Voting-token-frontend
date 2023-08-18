@@ -40,7 +40,7 @@ function ElectionStateProvider({ children }) {
   const [Name, setName] = useState("Shubham Goutham");
   const [Email, setEmail] = useState("shubh@gmail.com");
   const [NID, setNID] = useState("1234 2013 2548 2312");
-  const [UserPublicKey, setUserPublicKey] = useState("0221f4b6b742555d4cdead5aef0b8796f7427005a821a7c27ca1501f8f92e44a36");
+  const [Username, setUsername] = useState("Shubh");
   const [id,setid]=useState("");
   // const formData = {
   //   ElectionName,
@@ -293,8 +293,8 @@ function ElectionStateProvider({ children }) {
         setEmail,
         NID,
         setNID,
-        UserPublicKey,
-        setUserPublicKey,
+        Username,
+        setUsername,
         id,setid
       }}
     >
@@ -305,7 +305,7 @@ function ElectionStateProvider({ children }) {
 
 function useElectioncreation() {
   const all = useContext(LocalStateContext);
-  // console.log(all);
+  console.log(all);
   return all;
 }
 

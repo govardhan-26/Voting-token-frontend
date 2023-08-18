@@ -19,8 +19,8 @@ const Elections = () => {
   const {
     sensiletLogin,
     isConnected,
-    UserPublicKey,
-    setUserPublickKey,
+    Username,
+    setUsername,
     NID,
     setNID,
     Email,
@@ -53,9 +53,8 @@ const Elections = () => {
       const electionDoc = doc(db, "Elections", electionId);
 
       // Update the document's voterlist array by adding the new voter's NID
-      console.log(UserPublicKey);
       await updateDoc(electionDoc, {
-        voterlist: arrayUnion({ NID, Name, UserPublicKey }),
+        voterlist: arrayUnion({ NID, Name }),
       });
       alert("voter registration successfull");
       console.log("Voter added to voterlist successfully");
@@ -69,7 +68,7 @@ const Elections = () => {
 
       // Update the document's voterlist array by adding the new voter's NID
       await updateDoc(electionDoc, {
-        candidatelist: arrayUnion({ NID, Name, UserPublicKey }),
+        candidatelist: arrayUnion({ NID, Name }),
       });
       alert("Nomination successfull");
       console.log("Voter added to candidatelist successfully");
@@ -83,30 +82,39 @@ const Elections = () => {
       <Navbar />
       <div className="h-[100%] w-[100%] ">
         <div className="m-[5%] flex-col">
+          <p className="font-bold ">Active Elections</p>
+          <p className="text-[12px] text-[#AEAEAE]">Today:04:08:2023</p>
           {elections.map((election) => (
             <div
               key={election.id} // Use the ID as the key
-              className="w-[100%] p-[2%] flex m-2 border border-t border-2 border-black "
+              className="w-[100%] p-[2%] flex m-2"
             >
-              <div className="flex flex-col w-[50%]">
-                <p>Election name: {election.Election_Name}</p>
-                <p>Election Head: {election.Commision_Head}</p>
+              <div className="flex gap-[4rem] w-[50%]">
+                <div>
+                <p className="font-bold">Election name: </p>
+                <p className="mt-[1rem]"> {election.Election_Name}</p>
+                </div>
+
+                <div>
+                <p className="font-bold">Election Head: </p>
+                <p className="mt-[1rem]">{election.Commision_Head}</p>
+                </div> 
               </div>
-              <div className="flex flex-row-reverse justify-between w-[100%] ">
-                <button
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              <div className="gap-[2rem] flex mt-3 font-light ">
+              <button
+                  className="bg-blue-500 hover:bg-blue-700 text-white rounded-[10rem] w-[120px] h-[30px]"
                   onClick={() => addVoterToNomination(election.id)}
                 >
                   Nomination
                 </button>
                 <button
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  className="bg-blue-500 hover:bg-blue-700 text-white  w-[120px] h-[30px] rounded-[10rem]"
                   onClick={() => addVoterToVoterlist(election.id)}
                 >
-                  Register to Vote
+                  Register
                 </button>
               </div>
-            </div>
+              </div>
           ))}
         </div>
       </div>

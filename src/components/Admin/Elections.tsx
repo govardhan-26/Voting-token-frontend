@@ -34,19 +34,28 @@ const Elections = () => {
       <Navbar />
       <div className="h-[100%] w-[100%] ">
         <div className="m-[5%] flex-col">
+          <p className="font-bold ">Active Elections</p>
+          <p className="text-[12px] text-[#AEAEAE]">Today:04:08:2023</p>
           {elections.map((election, electionid) => (
             <div
               key={electionid}
-              className="w-[100%] p-[2%] flex m-2 border border-t border-2 border-black "
+              className="w-[100%] p-[2%] flex m-2 "
             >
-              <div className="flex flex-col w-[50%]">
-                <p>Election name: {election.Election_Name}</p>
-                <p>Election Head: {election.Commision_Head}</p>
-              </div>
-              <div className="flex flex-row justify-between w-[100%] ">
-                <Link to={'/admin_dashboard/elections/'+ election.Election_id + '/voter_list/'}>
+              <div className="flex gap-[4rem] w-[50%]">
+                  <div>
+                  <p className="font-bold">Election name: </p>
+                  <p className="mt-[1rem]"> {election.Election_Name}</p>
+                  </div>
+  
+                  <div>
+                  <p className="font-bold">Election Head: </p>
+                  <p className="mt-[1rem]">{election.Commision_Head}</p>
+                  </div> 
+                </div>
+              <div className="gap-[2rem] flex mt-3 font-light ">
+                <Link to="/voter_list">
                   <button
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    className="bg-blue-500 hover:bg-blue-700 text-white rounded-[10rem] w-[120px] h-[30px]"
                     onClick={() => {
                       // console.log(election.voterlist);
                       setid(election.Election_id);
@@ -55,8 +64,8 @@ const Elections = () => {
                     Voter List
                   </button>
                 </Link>
-                <Link to={'/admin_dashboard/elections/'+ election.Election_id + '/candidate_list/'}>
-                  <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => {
+                <Link to="candidate_list">
+                  <button className="bg-blue-500 hover:bg-blue-700 text-white rounded-[10rem] w-[120px] h-[30px]" onClick={() => {
                       // console.log(election.voterlist);
                       setid(election.Election_id);
                     }}>
@@ -73,3 +82,6 @@ const Elections = () => {
 };
 
 export default Elections;
+
+
+
