@@ -25,6 +25,7 @@ function ElectionStateProvider({ children }) {
       const [totalSupply, setTotalSupply] = useState(10);
       const [CanVote, setCanVote] = useState("");
       const [CanParticipate, setCanParticipate] = useState("");
+      const [token,setToken] = useState("");
 
       
       const formData = {
@@ -244,7 +245,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     
           setConnected(true);
           console.log(isConnected);
-         setmyAddress(pubkey.toAddress().toString());
+          setmyAddress(pubkey.toAddress().toString());
         }
     
         catch (error) {
@@ -254,7 +255,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       }; 
 
   return (
-    <LocalStateProvider value={{isConnected, myPubkey, myAddress,setmyAddress,  handleSubmit,handleTransfer,  sensiletLogin, ElectionName, setElectionName, HeadName, setHeadName, totalSupply, setTotalSupply, CanParticipate, setCanParticipate, CanVote, setCanVote}}>
+    <LocalStateProvider value={{isConnected, myPubkey, myAddress,setmyAddress,  handleSubmit,handleTransfer,  sensiletLogin, ElectionName, setElectionName, HeadName, setHeadName, totalSupply, setTotalSupply, CanParticipate, setCanParticipate, CanVote, setCanVote,token,setToken}}>
       {children}
     </LocalStateProvider>
   );
