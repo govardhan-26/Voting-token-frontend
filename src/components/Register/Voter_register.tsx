@@ -5,13 +5,19 @@ import voter_admin from '../../assets//voter_login.svg'
 import neucron from '../../assets/neucron.jpeg'
 import { Link, useNavigate } from 'react-router-dom'
 import Axios from 'axios'
-import app_logo from "../../assets/app_logo.png"
+import { addDoc,collection,doc,setDoc } from 'firebase/firestore'
+import { db } from '../../firebase'
+import { useElectioncreation } from '../Context';import app_logo from "../../assets/app_logo.png"
 
 
 const Voter_register = () => {
     const [email, setEmail] = useState("");
+    const [name, setName] = useState("");
+    const [userName, setUserName] = useState("");
+    const [NID, setNID] = useState("");
     const [password, setPassword] = useState("");
     const Navigate = useNavigate();
+    const {token,setToken} = useElectioncreation();
 
     const Register = (e : any) => {
         e.preventDefault();
@@ -25,8 +31,28 @@ const Voter_register = () => {
             }
         })
         .then((response)=>{
-            console.log(response);
-            Navigate('/voter_dashboard');
+            const userData = response.data.data; // Assuming this contains user data
+            const accessToken = userData.access_token;
+            setToken(accessToken);
+            
+            // Extend userData with additional properties
+            userData.email = email;
+            userData.name = name; // Replace with actual user name
+            userData.NID =  NID; // Replace with actual NID
+            userData.username = userName; // Replace with actual username
+            
+            // Reference the 'users' collection and use the access token as the document ID
+            const userDocRef = doc(db, 'users', accessToken);
+            
+            // Set the user data in the document
+            setDoc(userDocRef, userData)
+              .then(() => {
+                console.log('User data added successfully!');
+                Navigate('/voter_dashboard');
+              })
+              .catch((error) => {
+                console.error('Error adding user data: ', error);
+              });
     })
     }
     return (
@@ -54,7 +80,13 @@ const Voter_register = () => {
                         <input type="password" id="password" placeholder="Password" className='p-2 border rounded-md w-[20rem]' onChange={(e)=>{setPassword(e.target.value)}}/>
                         <label htmlFor="password" className='m-2 ml-0'>Confirm Password</label>
                         <input type="password" id="password" className='p-2 border rounded-md w-[20rem]' placeholder="password"/>
-                        <button className="w-[85%] p-3 m-8 pl-0 ml-0 rounded-[10rem] text-white bg-[#6268EA] ">Register</button>
+                        <label htmlFor="name">Name</label>
+                    <input type="text" id="name" placeholder="name" onChange={(e)=>{setName(e.target.value)}}/>
+                    <label htmlFor="user_name">User name</label>
+                    <input type="text" id="user_name" placeholder="user_name" onChange={(e)=>{setUserName(e.target.value)}}/>
+                    <label htmlFor="nid">NID</label>
+                    <input type="text" id="nid" placeholder="nid" onChange={(e)=>{setNID(e.target.value)}}/>
+                    <button className="w-[85%] p-3 m-8 pl-0 ml-0 rounded-[10rem] text-white bg-[#6268EA] ">Register</button>
                         <p className='text-[13px] absolute left-[9rem] top-[22rem] gap-2 mt-3 mx-auto  '>Already Had an Account ?  <a href='/admin_login' className='underline text-[#6268EA]'>Login</a></p>
                         {/* <div className="neucron">
                             <p className="neucron-button">Register Using Neucron </p>

@@ -6,32 +6,36 @@ import app_logo from "../../assets/app_logo.png";
 import neucron from "../../assets/neucron.jpeg";
 import { Link, useNavigate } from "react-router-dom";
 import Axios from "axios";
-import { FcGoogle } from "react-icons/fc";
+import { FcGoogle } from "react-icons/fc";import { useElectioncreation } from '../Context'
 
-const Voter_register = () => {
+
+const Voter_Login = () => {
+    
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+    const [accessToken, setAccessToken] = useState(null);
+    const { token,setToken} = useElectioncreation();
   const Navigate = useNavigate();
 
-  const Register = (e: any) => {
-    e.preventDefault();
-    Axios.post(
-      "https://api.neucron.io/auth/login",
-      {
-        email: email,
-        password: password,
-      },
-      {
-        headers: {
-          accept: "application/json",
-          "content-type": "application/json",
-        },
-      }
-    ).then((response) => {
-      console.log(response);
-      Navigate("/admin_dashboard");
-    });
-  };
+    const Register = (e : any) => {
+        e.preventDefault();
+        Axios.post('https://api.neucron.io/auth/login', {
+            "email": email,
+            "password": password
+        }, { 
+            headers: {
+                'accept': 'application/json',
+                'content-type': 'application/json'
+            }
+        })
+        .then((response)=>{
+            const token = response.data.data.access_token;
+            setToken(token);
+            console.log(response);
+            
+            Navigate('/voter_dashboard');
+    })
+    }
   return (
     <div>
       <div>
@@ -123,4 +127,6 @@ const Voter_register = () => {
   );
 };
 
-export default Voter_register;
+export default Voter_Login
+
+
