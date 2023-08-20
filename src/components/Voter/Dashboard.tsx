@@ -1,43 +1,9 @@
 import React, { useState } from 'react'
 import Voter_navbar from './Voter_navbar'
 import { useElectioncreation } from '../Context';
-import { useEffect } from 'react';
-import { db } from '../../firebase';
-import { doc,getDoc} from 'firebase/firestore';
-interface UserData {
-  name: string;
-  email: string;
-  nid: string;
-  username: string;
-  // Add other fields as needed
-}
 
 const Dashboard = () => {
-  const [userInfo, setUserInfo] = useState<UserData | null>(null);
-  const { token, setToken} = useElectioncreation();
-
-  useEffect(() => {
-   
-
-    const fetchUserInfo = async () => {
-      const docRef = doc(db, 'users', token);
-
-      try {
-        const docData = (await getDoc(docRef)).data();
-        if (docData) {
-          setUserInfo(docData as UserData); // Cast docData to UserData
-        } else {
-          console.log('No such document!');
-        }
-      } catch (error) {
-        console.error('Error fetching user information:', error);
-      }
-    };
-
-    fetchUserInfo();
-  }, []);
-
-  const { sensiletLogin,myAddress, isConnected} = useElectioncreation(); 
+  const { sensiletLogin, isConnected} = useElectioncreation(); 
   const [Name, setName] = useState("Shubham Goutham");
   const [Email, setEmail] = useState("shubh@gmail.com");
   const [NID, setNID] = useState("1234 2013 2548 2312");
@@ -45,15 +11,6 @@ const Dashboard = () => {
   return (
     <div className='flex'>
         <Voter_navbar/>
-        {userInfo && Object.keys(userInfo).length > 0 && (
-          <div>
-            <div className='flex p-[1%] m-[2%] w-[50%] justify-between '>
-              <label><b>Name</b></label>
-              <p className=' rounded-[5px] pl-[3%]'>{userInfo.name}</p>
-            </div>
-            {/* ... Other user info rendering ... */}
-          </div>
-        )}
         <div className="profile text-[130%] w-full m-[8%] text-black flex flex-col items-center" >
           <div className='flex p-[1%] m-[2%] w-[50%] justify-between '>
               <label ><b>Name</b></label>
@@ -77,7 +34,7 @@ const Dashboard = () => {
           </div>
         </div>
     </div>
-  )
-}
+  );
+};
 
-export default Dashboard
+export default Dashboard;

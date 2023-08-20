@@ -8,6 +8,7 @@ import { useElectioncreation } from '../Context';
 const Admin_dashboard = () => {
 
   const { sensiletLogin, isConnected} = useElectioncreation(); 
+  
   const [Name, setName] = useState("Shubham Goutham");
   const [Email, setEmail] = useState("shubh@gmail.com");
   const [NID, setNID] = useState("1234 2013 2548 2312");

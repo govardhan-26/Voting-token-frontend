@@ -13,12 +13,13 @@ import { Link, useParams } from "react-router-dom";
 import { db } from "../../../firebase";
 import { useElectioncreation } from "../../Context";
 import Navbar from "../Navbar";
-import "./Voter_list.css";
+import "./candidate_list.css";
 
-const VoterList = () => {
+const CandidateList = () => {
+  
   const { Election_id } = useParams();
 
-  const [voterLists, setVoterLists] = useState<string[]>([]);
+  const [candidateLists, setcandidateLists] = useState<string[]>([]);
 
   const { handleTransfer, setmyAddress } = useElectioncreation();
 
@@ -31,8 +32,9 @@ const VoterList = () => {
 
         if (electionSnapshot.exists()) {
           const electionData = electionSnapshot.data();
-          const voterList = electionData?.voterlist || [];
-          setVoterLists(voterList);
+          const candidatelist = electionData?.candidatelist || [];
+          setcandidateLists(candidatelist);
+          console.log(candidateLists);
         } else {
           console.log("Election not found");
         }
@@ -50,30 +52,20 @@ const VoterList = () => {
       <Navbar />
       <div className="h-[100%] w-[100%] ">
         <div className="m-[5%] flex-col">
-        <p className="text-[12px] text-[#AEAEAE]">Today:04:08:2023</p>
-          {voterLists.map((voter, voterid) => (
+          {candidateLists.map((candidate, candidateid) => (
             <div
-              key={voterid}
+              key={candidateid}
               className="w-[100%] p-[2%] flex m-2 "
             >
-              <div className="flex gap-[4rem] w-full ">
-                <div className="w-full">
-                  <p className="font-bold">Voter NID:</p>
-                  <p className="mt-[1rem]">{voter["NID"]}</p>
-                </div>
-
-                <div className="w-full">
-                  <p className="font-bold">Voter Name:</p>
-                  <p className="mt-[1rem]">{voter["Name"]}</p>
-                </div>
-                
-
-                {/* <p>Election Head: {voter.Commision_Head}</p> */}
-                <div className="flex justify-end w-full">
-                  <button className="bg-blue-500 hover:bg-blue-700 text-white rounded-[10rem] w-[140px] h-[40px]" >
-                    Transfer token{" "}
+              <div className="flex w-[50%]">
+                <p>candidate NID: {candidate["NID"]}</p>
+                <p>candidate Name: {candidate["Name"]}</p>
+                {/* <p>Election Head: {candidate.Commision_Head}</p> */}
+                {/* <div className="flex flex-row justify-between w-[100%] ">
+                  <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    Candidate List{" "}
                   </button>
-                </div>
+                </div> */}
               </div>
             </div>
           ))}
@@ -83,4 +75,4 @@ const VoterList = () => {
   );
 };
 
-export default VoterList;
+export default CandidateList;
