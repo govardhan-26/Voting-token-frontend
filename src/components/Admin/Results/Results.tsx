@@ -1,105 +1,80 @@
-import React, { useState } from 'react'
-import Navbar from '../Navbar'
-import axios from 'axios'
-
+import React, { useEffect, useState } from "react";
+import Navbar from "../Navbar";
+import { DocumentData, QuerySnapshot, getDocs } from "firebase/firestore";
+import { collection } from "firebase/firestore";
+import { db } from "../../../firebase";
+import { Link } from "react-router-dom";
+import { useElectioncreation } from "../../Context";
 const Results = () => {
-    const [candidates, setCandidates]  = useState([
-        {
-            Candidate_id: 1,
-            Candidate_name: "Shubham Goutham",
-            public_key : "0221f4b6b742555d4cdead5aef0b8796f7427005a821a7c27ca1501f8f92e44a36",
-            votes : 0
-        },
-        {
-            Candidate_id: 2,
-            Candidate_name: "Shubham",
-            public_key : "0221f4b6b742555d4cdead5aef0b8796f7427005a821a7c27ca1501f8f92e44a36",
-            votes : 0
-        },
-        {
-            Candidate_id: 3,
-            Candidate_name: "Goutham",
-            public_key : "0221f4b6b742555d4cdead5aef0b8796f7427005a821a7c27ca1501f8f92e44a36",
-            votes : 0
-        },
-        {
-            Candidate_id: 4,
-            Candidate_name: "Goutham Shubham",
-            public_key : "0221f4b6b742555d4cdead5aef0b8796f7427005a821a7c27ca1501f8f92e44a36",
-            votes : 0
-        }
-    ])
 
-    const updateVotes = () => {
-        const baseURL = "https://api.whatsonchain.com/v1/bsv/test/script/";
-      
-        Promise.all(
-          candidates.map(async (candidate) => {
-            const url = baseURL + candidate.public_key + "/history";
-      
-            return axios.get(url)
-              .then(response => {
-                return { ...candidate, votes: response.data.length };
-                console.log("api called");
-              })
-              .catch(error => {
-                console.error("Error fetching data for candidate:", candidate.public_key, error);
-                return candidate; 
-              });
-          })
-        ).then(updatedCandidates => {
-          setCandidates(updatedCandidates);
+  const { id, setid } = useElectioncreation();
+  const dataref = collection(db, "Elections");
+  const [elections, setElections] = useState<DocumentData[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const querySnapshot: QuerySnapshot<DocumentData> = await getDocs(
+          dataref
+        );
+        const data: DocumentData[] = [];
+        querySnapshot.forEach((doc) => {
+          data.push(doc.data());
         });
-      };
+        setElections(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
 
+    fetchData();
+  }, []);
 
-    // const updateVotes = () => {
-    //     setCandidates((prev) =>
-    //       prev.map((candidate) => ({ ...candidate, votes: 100 }))
-    //     );
-    //   };
-      
-      
-    
   return (
-    <div className='flex w-[100vw] h-[100vh] '>
-        <Navbar/>
-        <div className='h-[100%] w-[100%]'>
-            <div className=' m-[5%] flex-col '>
-              <h1 className='font-bold'>Results</h1>
-              <p className="text-[12px] text-[#AEAEAE]">Today:04:08:2023</p>
-                {candidates.map((candidate, Candidate_id) => (
-                    <div className='flex gap-[4rem] m-[3rem] w-[50%]'>
-                      <div>
-                        <p className='font-bold'>ID</p>
-                        <p className='mt-[1rem]'>{candidate.Candidate_id}</p>
-                      </div>
-
-                      <div>
-                        <p className='font-bold'> Name</p>
-                        <p className='mt-[1rem]'>{candidate.Candidate_name}</p>
-                      </div>
-
-                      <div className=''>
-                        <p className='font-bold'>Public Key</p>
-                        <p className='mt-[1rem]'>{candidate.public_key}</p>
-                      </div>
-
-                      <div className='flex flex-col items-center [4rem]'>
-                        <p className='font-bold'>Votes</p>
-                        <p className='mt-[1rem]'>{candidate.votes}</p>
-                      </div>
-                    </div>
-                ))}
-
-                <div className=" bg-blue-500 relative  hover:bg-blue-700 text-white mx-auto rounded-[10rem] w-[120px] h-[40px]">
-                <button className='text-center flex mx-auto absolute top-[7px] left-[14px]' onClick={updateVotes}>Count Votes</button>
+    <div className="flex h-[100vh] w-[100vw]">
+      <Navbar />
+      <div className="h-[100%] w-[100%] ">
+        <div className="m-[5%] flex-col">
+          <p className="font-bold ">Active Elections</p>
+          <p className="text-[12px] text-[#AEAEAE]">Today:04:08:2023</p>
+          {elections.map((election, electionid) => (
+            <div
+              key={electionid}
+              className="w-[100%] p-[2%] flex m-2 "
+            >
+              <div className="flex gap-[4rem] w-[50%]">
+                  <div>
+                  <p className="font-bold">Election name: </p>
+                  <p className="mt-[1rem]"> {election.Election_Name}</p>
+                  </div>
+  
+                  <div>
+                  <p className="font-bold">Election Head: </p>
+                  <p className="mt-[1rem]">{election.Commision_Head}</p>
+                  </div> 
                 </div>
+              <div className="gap-[2rem] flex mt-3 font-light ">
+              <Link to={'/admin_dashboard/elections/'+ election.Election_id + '/Result/'}>
+                  <button
+                    className="bg-blue-500 hover:bg-blue-700 text-white rounded-[10rem] w-[120px] h-[30px]"
+                    onClick={() => {
+                      // console.log(election.voterlist);
+                      setid(election.Election_id);
+                    }}
+                  >
+                    See Results
+                  </button>
+                </Link>
+              </div>
             </div>
-            
+          ))}
         </div>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Results
+export default Results;
+
+
+
