@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../Navbar";
+import Navbar from "./Voter_navbar";
 import { DocumentData, QuerySnapshot, getDocs } from "firebase/firestore";
 import { collection } from "firebase/firestore";
-import { db } from "../../../firebase";
+import { db } from "../../firebase";
 import { Link } from "react-router-dom";
-import { useElectioncreation } from "../../Context";
+import { useElectioncreation } from "../Context";
 const Results = () => {
 
   const { id, setid } = useElectioncreation();

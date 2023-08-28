@@ -49,29 +49,39 @@ const CandidateList = () => {
 
   return (
     <div className="flex h-[100vh] w-[100vw]">
-      <Navbar />
-      <div className="h-[100%] w-[100%] ">
-        <div className="m-[5%] flex-col">
-          {candidateLists.map((candidate, candidateid) => (
-            <div
-              key={candidateid}
-              className="w-[100%] p-[2%] flex m-2 "
-            >
-              <div className="flex w-[50%]">
-                <p>candidate NID: {candidate["NID"]}</p>
-                <p>candidate Name: {candidate["Name"]}</p>
-                {/* <p>Election Head: {candidate.Commision_Head}</p> */}
-                {/* <div className="flex flex-row justify-between w-[100%] ">
-                  <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Candidate List{" "}
-                  </button>
-                </div> */}
+    <Navbar />
+    <div className="h-[100%] w-[100%] ">
+      <div className="m-[5%] flex-col">
+      <p className="text-[12px] text-[#AEAEAE]">Today:04:08:2023</p>
+        {candidateLists.map((voter, voterid) => (
+          <div
+            key={voterid}
+            className="w-[100%] p-[2%] flex m-2 "
+          >
+            <div className="flex gap-[4rem] w-full ">
+              <div className="w-full">
+                <p className="font-bold">Candidate NID:</p>
+                <p className="mt-[1rem]">{voter["NID"]}</p>
+              </div>
+
+              <div className="w-full">
+                <p className="font-bold">Candidate Name:</p>
+                <p className="mt-[1rem]">{voter["Name"]}</p>
+              </div>
+              
+
+              {/* <p>Election Head: {voter.Commision_Head}</p> */}
+              <div className="flex justify-end w-full">
+                <button className="bg-blue-500 hover:bg-blue-700 text-white rounded-[10rem] w-[140px] h-[40px]" >
+                  Remove{" "}
+                </button>
               </div>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
     </div>
+  </div>
   );
 };
 

@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../Navbar";
+import Navbar from "./Voter_navbar";
 import { DocumentData, QuerySnapshot, getDocs } from "firebase/firestore";
 import { collection } from "firebase/firestore";
-import { db } from "../../../firebase";
+import { db } from "../../firebase";
 import { Link } from "react-router-dom";
-import { useElectioncreation } from "../../Context";
-const Results = () => {
-
+import { useElectioncreation } from "../Context";
+const Elections = () => {
   const { id, setid } = useElectioncreation();
   const dataref = collection(db, "Elections");
   const [elections, setElections] = useState<DocumentData[]>([]);
@@ -54,7 +53,7 @@ const Results = () => {
                   </div> 
                 </div>
               <div className="gap-[2rem] flex mt-3 font-light ">
-              <Link to={'/admin_dashboard/elections/'+ election.Election_id + '/Result/'}>
+              <Link to={'/voter_dashboard/elections/'+ election.Election_id + '/Vote'}>
                   <button
                     className="bg-blue-500 hover:bg-blue-700 text-white rounded-[10rem] w-[120px] h-[30px]"
                     onClick={() => {
@@ -62,7 +61,15 @@ const Results = () => {
                       setid(election.Election_id);
                     }}
                   >
-                    See Results
+                    Token Status
+                  </button>
+                </Link>
+                <Link to={'/voter_dashboard/elections/'+ election.Election_id + '/Vote'}>
+                  <button className="bg-blue-500 hover:bg-blue-700 text-white rounded-[10rem] w-[120px] h-[30px]" onClick={() => {
+                      // console.log(election.voterlist);
+                      setid(election.Election_id);
+                    }}>
+                    Vote{" "}
                   </button>
                 </Link>
               </div>
@@ -74,7 +81,7 @@ const Results = () => {
   );
 };
 
-export default Results;
+export default Elections;
 
 
 

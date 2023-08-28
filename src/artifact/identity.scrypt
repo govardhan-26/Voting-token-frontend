@@ -2,11 +2,13 @@
 contract Identity {
   bytes m;
   const PubKey issuerPubKey;
+  @state bytes candidateName;
   @state PubKey userPubKey;
   constructor(PubKey issuer, bytes message) {
     this.issuerPubKey = issuer;
     this.userPubKey = issuer;
     this.m = message;
+    this.candidateName = "admin";
   }
   public function transfer2(Sig userSig, PubKey receiverPubKey, int satoshisSent, SigHashPreimage __scrypt_ts_txPreimage) {
     require(Tx.checkPreimageSigHashType(__scrypt_ts_txPreimage, SigHashType(b'c3')));
@@ -18,12 +20,12 @@ contract Identity {
     this.userPubKey = receiverPubKey;
     require(1 == 1);
   }
-  public function transfer1(Sig userSig, PubKey receiverPubKey, int satoshisSent, SigHashPreimage __scrypt_ts_txPreimage, int __scrypt_ts_changeAmount, Ripemd160 __scrypt_ts_changeAddress) {
+  public function transfer1(Sig userSig, PubKey receiverPubKey, int satoshisSent, bytes candidateName1, SigHashPreimage __scrypt_ts_txPreimage, int __scrypt_ts_changeAmount, Ripemd160 __scrypt_ts_changeAddress) {
     require(Tx.checkPreimageSigHashType(__scrypt_ts_txPreimage, SigHashType(b'41')));
+    this.candidateName = candidateName1;
     int satoshisTotal = SigHash.value(__scrypt_ts_txPreimage);
     require(satoshisSent > 0 && satoshisSent <= satoshisTotal);
     require(checkSig(userSig, this.userPubKey));
-    require(this.userPubKey == receiverPubKey || this.userPubKey == this.issuerPubKey);
     PubKey previousUserPubKey = this.userPubKey;
     this.userPubKey = receiverPubKey;
     bytes outputs = this.buildStateOutput(satoshisSent);
@@ -33,7 +35,7 @@ contract Identity {
         outputs += this.buildStateOutput(satoshisLeft);
       }
     if(__scrypt_ts_changeAmount > 0) {
-        outputs += Utils.buildOutput(Utils.buildPublicKeyHashScript(__scrypt_ts_changeAddress), __scrypt_ts_changeAmount);
+        outputs += (__scrypt_ts_changeAmount > 0 ? Utils.buildOutput(Utils.buildPublicKeyHashScript(__scrypt_ts_changeAddress), __scrypt_ts_changeAmount) : b'');
       }
     require(hash256(outputs) == SigHash.hashOutputs(__scrypt_ts_txPreimage));
   }
@@ -46,7 +48,7 @@ contract Identity {
     this.userPubKey = this.issuerPubKey;
     bytes outputs = this.buildStateOutput(SigHash.value(__scrypt_ts_txPreimage));
     if(__scrypt_ts_changeAmount > 0) {
-        outputs += Utils.buildOutput(Utils.buildPublicKeyHashScript(__scrypt_ts_changeAddress), __scrypt_ts_changeAmount);
+        outputs += (__scrypt_ts_changeAmount > 0 ? Utils.buildOutput(Utils.buildPublicKeyHashScript(__scrypt_ts_changeAddress), __scrypt_ts_changeAmount) : b'');
       }
     
     require(hash256(outputs) == SigHash.hashOutputs(__scrypt_ts_txPreimage));

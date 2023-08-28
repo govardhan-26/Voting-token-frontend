@@ -11,7 +11,7 @@ import {
 import { collection } from "firebase/firestore";
 import { db } from "../../firebase";
 import { Link } from "react-router-dom";
-import { useElectioncreation } from "../Context";
+import { useElectioncreation } from "../Context"; 
 
 const Elections = () => {
   const dataref = collection(db, "Elections");
