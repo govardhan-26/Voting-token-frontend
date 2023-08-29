@@ -24,18 +24,19 @@ const LocalStateContext = createContext<any>(null);
 const LocalStateProvider = LocalStateContext.Provider;
 
 function ElectionStateProvider({ children }) {
-  const x = "Sensilate";
-  const [isConnected, setConnected] = useState(false);
-  const signerRef = useRef<SensiletSigner>();
-  // const [contract, setContract] = useState<HelloWorld | undefined>(undefined)
-  const [deployedTxId, setDeployedTxId] = useState<string>("");
-  const [myPubkey, setMyPubkey] = useState("");
-  const [myAddress, setmyAddress] = useState<string>("");
-  const [ElectionName, setElectionName] = useState("MLA");
-  const [HeadName, setHeadName] = useState("Shubham Goutam");
-  const [totalSupply, setTotalSupply] = useState(10);
-  const [CanVote, setCanVote] = useState("");
-  const [CanParticipate, setCanParticipate] = useState("");
+      const x="Sensilate";
+      const [isConnected, setConnected] = useState(false);
+      const signerRef = useRef<SensiletSigner>();
+      // const [contract, setContract] = useState<HelloWorld | undefined>(undefined)
+      const [deployedTxId, setDeployedTxId] = useState<string>("")
+      const [myPubkey, setMyPubkey] = useState("");
+      const [myAddress, setmyAddress] = useState<string>("")
+      const [ElectionName, setElectionName] = useState("MLA");
+      const [HeadName, setHeadName] = useState("Shubham Goutam");
+      const [totalSupply, setTotalSupply] = useState(10);
+      const [CanVote, setCanVote] = useState("");
+      const [CanParticipate, setCanParticipate] = useState("");
+      const [token,setToken] = useState("");
 
   const [Name, setName] = useState("Shubham Goutham");
   const [Email, setEmail] = useState("shubh@gmail.com");
@@ -246,30 +247,32 @@ function ElectionStateProvider({ children }) {
     setRecall(recallTx.id);
   };
 
-  const sensiletLogin = async () => {
-    try {
-      const provider = new DefaultProvider();
-      const signer = new SensiletSigner(provider);
-
-      signerRef.current = signer;
-
-      const { isAuthenticated, error } = await signer.requestAuth();
-      if (!isAuthenticated) {
-        throw new Error(error);
-      }
-
-      const pubkey = await signer.getDefaultPubKey();
-
-      setMyPubkey(toHex(pubkey));
-
-      setConnected(true);
-      console.log(isConnected);
-      setmyAddress(pubkey.toAddress().toString());
-    } catch (error) {
-      console.error("sensiletLogin failed", error);
-      alert("sensiletLogin failed");
-    }
-  };
+      const sensiletLogin = async () => {
+        try {
+          const provider = new DefaultProvider();
+          const signer = new SensiletSigner(provider);
+    
+          signerRef.current = signer;
+    
+          const { isAuthenticated, error } = await signer.requestAuth()
+          if (!isAuthenticated) {
+            throw new Error(error)
+          }
+    
+          const pubkey = await signer.getDefaultPubKey();
+    
+          setMyPubkey(toHex(pubkey));
+    
+          setConnected(true);
+          console.log(isConnected);
+          setmyAddress(pubkey.toAddress().toString());
+        }
+    
+        catch (error) {
+          console.error("sensiletLogin failed", error);
+          alert("sensiletLogin failed")
+        }
+      }; 
 
   return (
     <LocalStateProvider
@@ -290,7 +293,7 @@ function ElectionStateProvider({ children }) {
         CanParticipate,
         setCanParticipate,
         CanVote,
-        setCanVote,
+        setCanVote,token,setToken,
         Name,
         setName,
         Email,
