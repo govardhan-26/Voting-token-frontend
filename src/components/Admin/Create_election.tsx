@@ -1,16 +1,26 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import { addDoc } from "firebase/firestore";
 import { collection,doc,updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
-// import './Create_election.css'
-
-import { PubKey, SensiletSigner, bsv, toByteString, toHex } from "scrypt-ts";
+import Axios from "axios";
+import { getDoc } from "firebase/firestore";
 import { useElectioncreation } from "../Context";
+// import './Create_election.css'
+interface UserData {
+  user_id: string;
+  name: string;
+  email: string;
+  nid: string;
+  username: string;
+  wallet_address:string;
+  pub_key:string;  // Add other fields as needed
+}
+
+
 
 const Create_election = () => {
   const {
-    isConnected,
     ElectionName,
     setElectionName,
     HeadName,
@@ -21,6 +31,10 @@ const Create_election = () => {
     setAadharCard,
     handleSubmit,
   } = useElectioncreation();
+  const [userInfo, setUserInfo] = useState<UserData | null>(null);
+  const {myAddress} = useElectioncreation();
+  const { token } = useElectioncreation();
+  const myPubkey = useElectioncreation();
 
   // useEffect(() => {
   //     console.log(isConnected);
@@ -28,23 +42,109 @@ const Create_election = () => {
   //     console.log("The HeadName is - ",HeadName);
   // }, )
 
+  useEffect(() => {
+    console.log("token============", token);
+    const fetchUserInfo = async () => {
+      try {
+        const response = await Axios.get('https://dev.neucron.io/user/info', {
+          headers: {
+            Authorization: `${token}`, // Include access token in the authorization header
+          },
+        });
+
+        const userData = response.data;
+        console.log(userData.data.id);
+
+        // Fetch Firestore document using the user ID
+        const docRef = doc(db, 'users', userData.data.id);
+
+        const docSnapshot = await getDoc(docRef);
+        if (docSnapshot.exists()) {
+          const docData = docSnapshot.data();
+          console.log(docData)
+          setUserInfo(docData as UserData);
+        } else {
+          console.log('No such document!');
+        }
+      } catch (error) {
+        console.error('Error fetching user information:', error);
+      }
+    };
+
+    if (token) {
+      fetchUserInfo();
+    }
+  }, [token]);
+
+  const performAnotherFunction = async () => {
+    try {
+      // Code for the additional function
+      console.log(myPubkey.myPubkey);
+  
+      // Add myPubkey.myPubkey to the user document
+      if (userInfo !== null) {
+        const userDoc = doc(db, 'users', userInfo.user_id);
+        await updateDoc(userDoc, {
+          sens_pub_key: myPubkey.myPubkey,
+        });
+        console.log('myPubkey added to user document successfully');
+      }
+    } catch (error) {
+      console.error('Error adding myPubkey to user document:', error);
+    }
+  };
+
   async function submitbase() {
     const docRef = await addDoc(collection(db, "Elections"), {
-        Election_Name:ElectionName,
-        Commision_Head: HeadName,
-        No_of_voters : totalSupply,
-        voterlist : [],
-        candidatelist:[]
+      Election_Name: ElectionName,
+      Commision_Head: HeadName,
+      No_of_voters: totalSupply,
+      voterlist: [], // Initialize voterlist as an empty array
+      candidatelist: [] // Initialize candidatelist as an empty array
     });
+  
     console.log("Document written with ID: ", docRef.id);
+  
     const electionDoc = doc(db, "Elections", docRef.id);
-
-  // Update the document to add a new attribute
-  await updateDoc(electionDoc, {
-    Election_id:docRef.id,
-  });
-
+  
+    // Update the document to add a new attribute
+    await updateDoc(electionDoc, {
+      Election_id: docRef.id,
+    });
+  
+    try {
+      // Code for the additional function
+      console.log(myPubkey.myPubkey);
+  
+      // Add docRef.id to the user's election_created array
+      if (userInfo !== null) {
+        const userDoc = doc(db, 'users', userInfo.user_id);
+        const userSnap = await getDoc(userDoc);
+  
+        if (userSnap.exists()) {
+          const userData = userSnap.data();
+  
+          if (userData?.election_created) {
+            userData.election_created.push(docRef.id); // Add the new election ID
+          } else {
+            userData.election_created = [docRef.id]; // Create an array if it doesn't exist
+          }
+  
+          await updateDoc(userDoc, {
+            election_created: userData.election_created,
+          });
+  
+          console.log('Election ID added to user document successfully');
+        } else {
+          console.log('User document does not exist');
+        }
+      }
+    } catch (error) {
+      console.error('Error adding Election ID to user document:', error);
+    }
   }
+  
+  
 
   const handleSubmit1 = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

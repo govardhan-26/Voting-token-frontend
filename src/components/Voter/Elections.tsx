@@ -11,10 +11,23 @@ import {
 import { collection } from "firebase/firestore";
 import { db } from "../../firebase";
 import { Link } from "react-router-dom";
-import { useElectioncreation } from "../Context"; 
+import { getDoc } from "firebase/firestore";
+import { useElectioncreation } from "../Context";
+import Axios from "axios";
+interface UserData {
+  user_id: string;
+  name: string;
+  email: string;
+  nid: string;
+  username: string;
+  // Add other fields as needed
+}
 
 const Elections = () => {
   const dataref = collection(db, "Elections");
+  
+  const [userInfo, setUserInfo] = useState<UserData | null>(null);
+  const { token } = useElectioncreation();
   const [elections, setElections] = useState<DocumentData[]>([]);
   const {
     sensiletLogin,
@@ -27,7 +40,43 @@ const Elections = () => {
     setEmail,
     Name,
     setName,
+    isVoted,
+    setIsVoted,
   } = useElectioncreation();
+
+  useEffect(() => {
+    console.log("token============", token);
+    const fetchUserInfo = async () => {
+      try {
+        const response = await Axios.get('https://dev.neucron.io/user/info', {
+          headers: {
+            Authorization: `${token}`, // Include access token in the authorization header
+          },
+        });
+
+        const userData = response.data;
+        console.log(userData.data.id);
+
+        // Fetch Firestore document using the user ID
+        const docRef = doc(db, 'users', userData.data.id);
+
+        const docSnapshot = await getDoc(docRef);
+        if (docSnapshot.exists()) {
+          const docData = docSnapshot.data();
+          console.log(docData)
+          setUserInfo(docData as UserData);
+        } else {
+          console.log('No such document!');
+        }
+      } catch (error) {
+        console.error('Error fetching user information:', error);
+      }
+    };
+
+    if (token) {
+      fetchUserInfo();
+    }
+  }, [token]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,17 +100,38 @@ const Elections = () => {
   async function addVoterToVoterlist(electionId: string) {
     try {
       const electionDoc = doc(db, "Elections", electionId);
-
+  
       // Update the document's voterlist array by adding the new voter's NID
       await updateDoc(electionDoc, {
-        voterlist: arrayUnion({ NID, Name }),
+        voterlist: arrayUnion({ NID, Name, isVoted }),
       });
-      alert("voter registration successfull");
+  
+      // Retrieve the election details from the election document
+      const electionSnapshot = await getDoc(electionDoc);
+      const electionData = electionSnapshot.data();
+      const electionDetails = {
+        electionId: electionId,
+        ...electionData,
+      };
+  
+      // Check if userInfo is not null before accessing user_id
+      if (userInfo !== null) {
+        // Add election details to the user document
+        const userDoc = doc(db, "users", userInfo.user_id);
+        await updateDoc(userDoc, {
+          elections: arrayUnion(electionDetails),
+          elections_registered: arrayUnion(electionId), // Add the election ID to elections_voted
+        });
+      }
+  
+      alert("Voter registration successful");
       console.log("Voter added to voterlist successfully");
     } catch (error) {
       console.error("Error adding voter to voterlist: ", error);
     }
   }
+  
+  
   async function addVoterToNomination(electionId: string) {
     try {
       const electionDoc = doc(db, "Elections", electionId);
