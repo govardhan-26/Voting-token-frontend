@@ -18,7 +18,7 @@ const Admin_register = () => {
 
     const Register = (e : any) => {
         e.preventDefault();
-        axios.post('https://api.neucron.io/auth/signup', {
+        axios.post('https://dev.neucron.io/auth/signup', {
             "email": email,
             "password": password
         }, {

@@ -43,6 +43,7 @@ function ElectionStateProvider({ children }) {
   const [NID, setNID] = useState("1234 2013 2548 2312");
   const [Username, setUsername] = useState("Shubh");
   const [id,setid]=useState("");
+  const [isVoted,setIsVoted] = useState(false);
   // const formData = {
   //   ElectionName,
   //   HeadName,
@@ -298,7 +299,8 @@ function ElectionStateProvider({ children }) {
         setNID,
         Username,
         setUsername,
-        id,setid
+        id,setid,
+        isVoted,setIsVoted
       }}
     >
       {children}
