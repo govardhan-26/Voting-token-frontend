@@ -11,8 +11,8 @@ import {
 } from "firebase/firestore";
 import { Link, useParams } from "react-router-dom";
 import { db } from "../../../firebase";
-import { useElectioncreation } from "../../Context";
-import Navbar from "../Navbar";
+import { useElectioncreation } from "../Context";
+import Navbar from "./Voter_navbar";
 
 const CandidateList = () => {
   
@@ -74,7 +74,6 @@ const CandidateList = () => {
                 <p className="font-bold">Votes</p>
                 <p className="mt-[1rem]">0</p>
               </div>
-             
             </div>
           </div>
         ))}

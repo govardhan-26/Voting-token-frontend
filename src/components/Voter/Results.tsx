@@ -54,7 +54,7 @@ const Results = () => {
                   </div> 
                 </div>
               <div className="gap-[2rem] flex mt-3 font-light ">
-              <Link to={'/admin_dashboard/elections/'+ election.Election_id + '/Result/'}>
+              <Link to={'/voter_dashboard/Results/'+ election.Election_id + '/Result/'}>
                   <button
                     className="bg-blue-500 hover:bg-blue-700 text-white rounded-[10rem] w-[120px] h-[30px]"
                     onClick={() => {

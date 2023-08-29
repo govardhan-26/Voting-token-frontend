@@ -103,7 +103,7 @@ const Navbar = () => {
                 
               </li>
               <li className="rounded-sm">
-                <Link to='/Results' className="flex items-center p-2 space-x-3 rounded-md">
+                <Link to='/admin_dashboard/Results' className="flex items-center p-2 space-x-3 rounded-md">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
