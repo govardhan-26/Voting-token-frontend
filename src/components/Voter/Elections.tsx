@@ -120,6 +120,7 @@ const Elections = () => {
         const userDoc = doc(db, "users", userInfo.user_id);
         await updateDoc(userDoc, {
           elections: arrayUnion(electionDetails),
+          elections_registered: arrayUnion(electionId), // Add the election ID to elections_voted
         });
       }
   
@@ -129,6 +130,7 @@ const Elections = () => {
       console.error("Error adding voter to voterlist: ", error);
     }
   }
+  
   
   async function addVoterToNomination(electionId: string) {
     try {
