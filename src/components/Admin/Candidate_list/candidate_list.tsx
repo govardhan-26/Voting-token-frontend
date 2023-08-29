@@ -51,7 +51,7 @@ const CandidateList = () => {
     <div className="flex h-[100vh] w-[100vw]">
     <Navbar />
     <div className="h-[100%] w-[100%] ">
-      <div className="m-[5%] flex-col">
+      <div className="m-[5%] flex-col overflow-y-scroll h-[90vh] overflow-x-hidden">
       <p className="text-[12px] text-[#AEAEAE]">Today:04:08:2023</p>
         {candidateLists.map((voter, voterid) => (
           <div
