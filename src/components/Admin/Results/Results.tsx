@@ -34,7 +34,7 @@ const Results = () => {
     <div className="flex h-[100vh] w-[100vw]">
       <Navbar />
       <div className="h-[100%] w-[100%] ">
-        <div className="m-[5%] flex-col">
+        <div className="m-[5%] flex-col overflow-y-scroll h-[90vh] overflow-x-hidden">
           <p className="font-bold ">Active Elections</p>
           <p className="text-[12px] text-[#AEAEAE]">Today:04:08:2023</p>
           {elections.map((election, electionid) => (
@@ -54,7 +54,7 @@ const Results = () => {
                   </div> 
                 </div>
               <div className="gap-[2rem] flex mt-3 font-light ">
-              <Link to={'/admin_dashboard/elections/'+ election.Election_id + '/Result/'}>
+              <Link to={'/admin_dashboard/Results/'+ election.Election_id + '/Result/'}>
                   <button
                     className="bg-blue-500 hover:bg-blue-700 text-white rounded-[10rem] w-[120px] h-[30px]"
                     onClick={() => {
@@ -73,6 +73,8 @@ const Results = () => {
     </div>
   );
 };
+
+
 
 export default Results;
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "./Navbar";
+import Navbar from "./Voter_navbar";
 import { DocumentData, QuerySnapshot, getDocs } from "firebase/firestore";
 import { collection } from "firebase/firestore";
 import { db } from "../../firebase";
@@ -33,7 +33,7 @@ const Elections = () => {
     <div className="flex h-[100vh] w-[100vw]">
       <Navbar />
       <div className="h-[100%] w-[100%] ">
-        <div className="m-[5%] flex-col overflow-y-scroll h-[90vh] overflow-x-hidden">
+        <div className="m-[5%] flex-col">
           <p className="font-bold ">Active Elections</p>
           <p className="text-[12px] text-[#AEAEAE]">Today:04:08:2023</p>
           {elections.map((election, electionid) => (
@@ -53,7 +53,7 @@ const Elections = () => {
                   </div> 
                 </div>
               <div className="gap-[2rem] flex mt-3 font-light ">
-              <Link to={'/admin_dashboard/elections/'+ election.Election_id + '/voter_list/'}>
+              <Link to={'/voter_dashboard/elections/'+ election.Election_id + '/Vote'}>
                   <button
                     className="bg-blue-500 hover:bg-blue-700 text-white rounded-[10rem] w-[120px] h-[30px]"
                     onClick={() => {
@@ -61,15 +61,15 @@ const Elections = () => {
                       setid(election.Election_id);
                     }}
                   >
-                    Voter List
+                    Token Status
                   </button>
                 </Link>
-                <Link to={'/admin_dashboard/elections/'+ election.Election_id + '/candidate_list/'}>
+                <Link to={'/voter_dashboard/elections/'+ election.Election_id + '/Vote'}>
                   <button className="bg-blue-500 hover:bg-blue-700 text-white rounded-[10rem] w-[120px] h-[30px]" onClick={() => {
                       // console.log(election.voterlist);
                       setid(election.Election_id);
                     }}>
-                    Candidate List{" "}
+                    Vote{" "}
                   </button>
                 </Link>
               </div>

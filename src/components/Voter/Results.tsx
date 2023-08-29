@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "./Navbar";
+import Navbar from "./Voter_navbar";
 import { DocumentData, QuerySnapshot, getDocs } from "firebase/firestore";
 import { collection } from "firebase/firestore";
 import { db } from "../../firebase";
 import { Link } from "react-router-dom";
 import { useElectioncreation } from "../Context";
-const Elections = () => {
+const Results = () => {
+
   const { id, setid } = useElectioncreation();
   const dataref = collection(db, "Elections");
   const [elections, setElections] = useState<DocumentData[]>([]);
@@ -53,7 +54,7 @@ const Elections = () => {
                   </div> 
                 </div>
               <div className="gap-[2rem] flex mt-3 font-light ">
-              <Link to={'/admin_dashboard/elections/'+ election.Election_id + '/voter_list/'}>
+              <Link to={'/voter_dashboard/Results/'+ election.Election_id + '/Result/'}>
                   <button
                     className="bg-blue-500 hover:bg-blue-700 text-white rounded-[10rem] w-[120px] h-[30px]"
                     onClick={() => {
@@ -61,15 +62,7 @@ const Elections = () => {
                       setid(election.Election_id);
                     }}
                   >
-                    Voter List
-                  </button>
-                </Link>
-                <Link to={'/admin_dashboard/elections/'+ election.Election_id + '/candidate_list/'}>
-                  <button className="bg-blue-500 hover:bg-blue-700 text-white rounded-[10rem] w-[120px] h-[30px]" onClick={() => {
-                      // console.log(election.voterlist);
-                      setid(election.Election_id);
-                    }}>
-                    Candidate List{" "}
+                    See Results
                   </button>
                 </Link>
               </div>
@@ -81,7 +74,7 @@ const Elections = () => {
   );
 };
 
-export default Elections;
+export default Results;
 
 
 

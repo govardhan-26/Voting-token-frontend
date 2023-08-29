@@ -24,6 +24,10 @@ export class Identity extends SmartContract {
     @prop()
     readonly issuerPubKey: PubKey
 
+
+    @prop(true)
+    candidateName :ByteString
+
     // the public key of current user
     @prop(true)
     userPubKey: PubKey
@@ -35,6 +39,7 @@ export class Identity extends SmartContract {
         this.issuerPubKey = issuer
         this.userPubKey = issuer // the first user is the issuer himself
         this.m=message
+        this.candidateName=toByteString("admin",true)
     }
 
     @method(SigHash.ANYONECANPAY_SINGLE)
@@ -81,9 +86,11 @@ export class Identity extends SmartContract {
     public transfer1(
         userSig: Sig, // the current user should provide his signature before transfer
         receiverPubKey: PubKey, // send to
-        satoshisSent: bigint // send amount
+        satoshisSent: bigint ,// send amount
+        candidateName1:ByteString
     ) {
         // total satoshis locked in this contract utxo
+        this.candidateName=candidateName1
         const satoshisTotal = this.ctx.utxo.value
         // require the amount requested to be transferred is valid
         assert(

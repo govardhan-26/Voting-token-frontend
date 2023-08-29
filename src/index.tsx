@@ -14,7 +14,7 @@ import { sha256, toByteString } from 'scrypt-ts';
 
 // var artifact = require('./artifact/src/contracts/helloworld.json');
 
-var artifact1 = require('./artifact/src/contracts/identity.json');
+var artifact1 = require('./artifact/identity.json');
 
 // HelloWorld.loadArtifact(artifact);
 

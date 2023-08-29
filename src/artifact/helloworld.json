@@ -2,7 +2,7 @@
     "version": 9,
     "compilerVersion": "1.19.0+commit.72eaeba",
     "contract": "HelloWorld",
-    "md5": "3e8b1d3dcd09dba51e3157f2ae15dcba",
+    "md5": "8bc277bf528d3ab1c8ff7bae0ca2f7df",
     "structs": [],
     "library": [],
     "alias": [],
@@ -30,7 +30,7 @@
     ],
     "stateProps": [],
     "buildType": "debug",
-    "file": "file:///C:/Users/gs041/Desktop/scryptFrontend/helloworld/artifact/src/contracts/helloworld.scrypt",
-    "hex": "00<hash>610079527a75517a756100795279a8877777",
+    "file": "file:///D:/Coding/OpenSource/Tsoc/Voting-token-frontend/artifacts/helloworld.scrypt",
+    "hex": "<hash>00795279a8877777",
     "sourceMapFile": ""
 }

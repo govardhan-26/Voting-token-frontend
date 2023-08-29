@@ -1,7 +1,0 @@
-{
-  "success": true,
-  "errors": [],
-  "scryptfile": "src/contracts/helloworld.scrypt",
-  "sourceMapFile": "src/contracts/helloworld.scrypt.map",
-  "ctxMethods": []
-}

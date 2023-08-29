@@ -176,11 +176,14 @@ function ElectionStateProvider({ children }) {
     //         pubKeyOrAddrToSign: $publickey.toAddress()
     //     } as MethodCallOptions<P2PKH>
     // );
+    const candidatename="shubham"
     const { tx: transferToAliceTx } = await meInstance.methods.transfer1(
       (sigResponses: SignatureResponse[]) =>
         findSig(sigResponses, bsv.PublicKey.fromString(myPubkey)),
       PubKey(toHex(alicePubkey)),
+      
       BigInt(vote_satoshisSendToAlice),
+       toByteString(candidatename,true),
       {
         pubKeyOrAddrToSign: bsv.PublicKey.fromString(myPubkey),
         next: [
@@ -196,6 +199,7 @@ function ElectionStateProvider({ children }) {
           },
         ],
       } as unknown as MethodCallOptions<Identity>
+     
     );
 
     const addr = alicePubkey.toAddress(bsvNetwork).toString();

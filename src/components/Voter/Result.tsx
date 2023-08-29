@@ -11,9 +11,8 @@ import {
 } from "firebase/firestore";
 import { Link, useParams } from "react-router-dom";
 import { db } from "../../../firebase";
-import { useElectioncreation } from "../../Context";
-import Navbar from "../Navbar";
-import "./candidate_list.css";
+import { useElectioncreation } from "../Context";
+import Navbar from "./Voter_navbar";
 
 const CandidateList = () => {
   
@@ -51,7 +50,7 @@ const CandidateList = () => {
     <div className="flex h-[100vh] w-[100vw]">
     <Navbar />
     <div className="h-[100%] w-[100%] ">
-      <div className="m-[5%] flex-col overflow-y-scroll h-[90vh] overflow-x-hidden">
+      <div className="m-[5%] flex-col">
       <p className="text-[12px] text-[#AEAEAE]">Today:04:08:2023</p>
         {candidateLists.map((voter, voterid) => (
           <div
@@ -71,10 +70,9 @@ const CandidateList = () => {
               
 
               {/* <p>Election Head: {voter.Commision_Head}</p> */}
-              <div className="flex justify-end w-full">
-                <button className="bg-blue-500 hover:bg-blue-700 text-white rounded-[10rem] w-[140px] h-[40px]" >
-                  Remove{" "}
-                </button>
+              <div className="w-full">
+                <p className="font-bold">Votes</p>
+                <p className="mt-[1rem]">0</p>
               </div>
             </div>
           </div>
