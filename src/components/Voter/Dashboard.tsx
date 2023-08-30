@@ -87,7 +87,7 @@ const Dashboard = () => {
     <div className='flex'>
       <Navbar />
       {userInfo && Object.keys(userInfo).length > 0 && (
-        <div className='profile text-[130%] w-full m-[8%] text-black flex flex-col items-center'>
+        <div className='profile text-[100%] w-full h-[90vh] text-black flex flex-col items-center'>
           <div className='flex p-[1%] m-[2%] w-[50%] justify-between'>
             <label><b>Name</b></label>
             <p className='rounded-[5px] pl-[3%]'>{userInfo.name}</p>
